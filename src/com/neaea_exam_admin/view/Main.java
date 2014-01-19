@@ -1,4 +1,4 @@
-package com.example.neaea_exam_admin;
+package com.neaea_exam_admin.view;
 
 import javax.servlet.annotation.WebServlet;
 

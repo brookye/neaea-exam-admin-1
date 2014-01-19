@@ -1,2 +1,4 @@
 #ignore the build
 build/
+todo.txt
+db_files/*.bak
