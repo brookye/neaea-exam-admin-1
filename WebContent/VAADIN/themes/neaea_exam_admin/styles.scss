@@ -1,0 +1,9 @@
+@import "addons.scss";
+@import "neaea_exam_admin.scss";
+
+/* This file prefixes all rules with the theme name to avoid causing conflicts with other themes. */
+/* The actual styles should be defined in neaea_exam_admin.scss */
+.neaea_exam_admin {
+  @include addons;
+  @include neaea_exam_admin;
+}
