@@ -9,22 +9,22 @@ Project Description
 Installation
 ------------
  
- *Install mysql server
+ * Install mysql server
  
- *Install java servlet container like apache tomcat
+ * Install java servlet container like apache tomcat
  
- *Build the application
+ * Build the application
  
-    *Inoorder to build
-     -----------------
+    * Inoorder to build
+      -----------------
      
-      *install eclipse
+      * install eclipse
       
-      *install vaadin plugin for eclipse
+      * install vaadin plugin for eclipse
       
-      *install apahce tomcat or other servlet container which can be run from with in eclipse
+      * install apahce tomcat or other servlet container which can be run from with in eclipse
       
-      *build the application
+      * build the application
       
- *Deploy the war file in to the application     
+ * Deploy the war file in to the application     
  
