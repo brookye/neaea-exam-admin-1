@@ -83,6 +83,9 @@ public class ConnManager {
 		return rowsAffected;
 	}
 
+	/*
+	 * This is basically for primitive testing
+	 */
 	public static void main(String[] args) {
 		ConnManager cm = new ConnManager("root","realengineer","neaeaexamadmin");
 		ResultSet rs = cm.executeRead("SELECT * FROM exam");
