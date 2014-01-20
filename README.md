@@ -26,5 +26,5 @@ Installation
       
       * build the application
       
- * Deploy the war file in to the application     
+ * Deploy the war file in to the server
  
