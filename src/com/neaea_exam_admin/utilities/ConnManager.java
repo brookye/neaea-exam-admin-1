@@ -13,16 +13,18 @@ import java.sql.Statement;
  * 
  */
 public class ConnManager {
-	private String dbUserPassword;
-	private String dbUserName;
-	private String schemaName;
+	private String dbUserPassword="realengineer";
+	private String dbUserName="root";
+	private String schemaName="neaeaexamadmin";
 	private Connection connection;
 	private int port = 3306;
 
 	private String buildConnString() {
 		return "jdbc:mysql://localhost:" + port + "/" + schemaName;
 	}
-
+    public ConnManager(){
+    	
+    }
 	public ConnManager(String _dbUserName, String _dbUserPassword,
 			String _schemaName) {
 		dbUserName = _dbUserName;
@@ -46,7 +48,7 @@ public class ConnManager {
 		return connection;
 	}
 
-	/**
+ 	/**
 	 * for queries of type select
 	 * 
 	 * @param sqlString
@@ -71,7 +73,8 @@ public class ConnManager {
 	 * @param sqlString
 	 * @return the number of rows affected
 	 */
-	public int executeCUD(String sqlString) {
+	public void executeCUD(String sqlString) {
+		@SuppressWarnings("unused")
 		int rowsAffected = 0;
 		try {
 			Statement stmt = connection.createStatement();
@@ -80,7 +83,7 @@ public class ConnManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return rowsAffected;
+		
 	}
 
 	/*

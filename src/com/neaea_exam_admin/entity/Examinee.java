@@ -11,5 +11,6 @@ public class Examinee {
    public String nationality;
    public String category;
    public byte [] photo;
-   public String registrationConfirmationNumber; //PK 
+   public String registrationConfirmationNo; //PK 
+   
 }
