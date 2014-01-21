@@ -75,7 +75,7 @@ public class ConnManager {
 	 */
 	public void executeCUD(String sqlString) {
 		@SuppressWarnings("unused")
-		int rowsAffected = 0;
+		int  = 0;
 		try {
 			Statement stmt = connection.createStatement();
 			rowsAffected = stmt.executeUpdate(sqlString);
