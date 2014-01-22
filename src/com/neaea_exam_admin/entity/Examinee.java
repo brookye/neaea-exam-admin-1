@@ -10,13 +10,13 @@ public class Examinee {
 	private String sight;
 	private String nationality;
 	private byte[] photo;
-	private String registrationConfirmationNo; // PK	
+	private String registrationConfirmationNo;
 	private String catagory;
-
+    private int examineeId;
 	public Examinee(String _name, String _fatherName, String _grandFatherName,
 			SchoolCodeBook _schoolCode, int _age, String _sex, String _sight,
 			String _nationality, String _catagory, byte[] _photo,
-			String _registrationConfiramtinNo) {
+			String _registrationConfiramtinNo,int _examineeId) {
             name=_name;
             fatherName=_fatherName;
             grandFatherName=_grandFatherName;
@@ -28,10 +28,27 @@ public class Examinee {
             photo=_photo;
             registrationConfirmationNo=_registrationConfiramtinNo;
             catagory=_catagory;
+            examineeId=_examineeId;
 	}
 
 	public String getName() {
 		return name;
+	}
+
+	public String getCatagory() {
+		return catagory;
+	}
+
+	public void setCatagory(String catagory) {
+		this.catagory = catagory;
+	}
+
+	public int getExamineeId() {
+		return examineeId;
+	}
+
+	public void setExamineeId(int examineeId) {
+		this.examineeId = examineeId;
 	}
 
 	public void setName(String name) {

@@ -2,6 +2,7 @@ package com.neaea_exam_admin.utilities;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -15,8 +16,7 @@ import java.sql.Statement;
 public class ConnManager {
 	private String dbUserPassword="realengineer";
 	private String dbUserName="root";
-	private String schemaName="neaeaexamadmin";
-	private Connection connection;
+	private String schemaName="neaeaexamadmin";	
 	private int port = 3306;
 
 	private String buildConnString() {
@@ -30,10 +30,19 @@ public class ConnManager {
 		dbUserName = _dbUserName;
 		dbUserPassword = _dbUserPassword;
 		schemaName = _schemaName;
-		try {
+		
+
+	}
+	/**
+	 * opens a connection to the database
+	 * @return a Connection object
+	 */
+    private Connection openConn(){
+    	try {
 			Class.forName("com.mysql.jdbc.Driver");
-			this.connection = (Connection) DriverManager.getConnection(
+			Connection connection = (Connection) DriverManager.getConnection(
 					buildConnString(), dbUserName, dbUserPassword);
+			return connection;
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -41,12 +50,21 @@ public class ConnManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-	}
-
-	public Connection getConnection() {
-		return connection;
-	}
+    	return null;
+    }
+    /**
+     * closes a connection that is left open
+     * @param connection
+     */
+    private void closeConn(Connection connection){
+    	try {
+			connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+	
 
  	/**
 	 * for queries of type select
@@ -57,12 +75,18 @@ public class ConnManager {
 
 	public ResultSet executeRead(String sqlString) {
 		ResultSet rst = null;
+		Connection connection=openConn();
 		try {
 			Statement stmt = connection.createStatement();
 			rst = stmt.executeQuery(sqlString);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		finally{
+			if (connection!=null){
+				closeConn(connection);
+			}
 		}
 		return rst;
 	}
@@ -75,7 +99,8 @@ public class ConnManager {
 	 */
 	public void executeCUD(String sqlString) {
 		@SuppressWarnings("unused")
-		int  = 0;
+		int  rowsAffected= 0;
+		Connection connection=openConn();
 		try {
 			Statement stmt = connection.createStatement();
 			rowsAffected = stmt.executeUpdate(sqlString);
@@ -83,9 +108,23 @@ public class ConnManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		finally{
+		 if(connection!=null){
+			 closeConn(connection);
+		 }
+		}
 		
 	}
-
+	public PreparedStatement getPreparedStatement(String prepStmtQuery){
+		try {
+			return openConn().prepareStatement(prepStmtQuery);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+   
 	/*
 	 * This is basically for primitive testing
 	 */

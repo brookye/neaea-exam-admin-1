@@ -5,9 +5,9 @@ public class SchoolCodeBook {
 
 	private String code; // PK
 	private int groupNo;
-	private String schoolCodeId; // PK	
+	private int schoolCodeId; // PK	
     
-	public SchoolCodeBook(String _code, int _groupNo,String _schoolCodeId) {
+	public SchoolCodeBook(String _code, int _groupNo,int _schoolCodeId) {
 		code = _code;
 		groupNo = _groupNo;
 		schoolCodeId=_schoolCodeId;
@@ -29,11 +29,11 @@ public class SchoolCodeBook {
 		this.groupNo = groupNo;
 	}
 
-	public String getSchoolCodeId() {
+	public int getSchoolCodeId() {
 		return schoolCodeId;
 	}
 
-	public void setSchoolCodeId(String schoolCodeId) {
+	public void setSchoolCodeId(int schoolCodeId) {
 		this.schoolCodeId = schoolCodeId;
 	}
 	

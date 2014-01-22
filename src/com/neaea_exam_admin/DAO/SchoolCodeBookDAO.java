@@ -10,6 +10,10 @@ import com.neaea_exam_admin.entity.SchoolCodeBook;
 public class SchoolCodeBookDAO {
 	private ConnManager connManager;
 
+	public SchoolCodeBookDAO(ConnManager _connManager) {
+		connManager = _connManager;
+	}
+
 	public void persist(SchoolCodeBook schoolCodeBook) {
 		String persistQuery = "INSERT INTO schoolcode VALUES('"
 				+ schoolCodeBook.getCode() + "'," + schoolCodeBook.getGroupNo()
@@ -18,10 +22,10 @@ public class SchoolCodeBookDAO {
 	}
 
 	public void delete(SchoolCodeBook schoolCodeBook) {
-		String rmQuery = "DELETE FROM schoolcode WHERE schoolCodeId='"
+		String delQuery = "DELETE FROM schoolcode WHERE schoolCodeId='"
 				+ schoolCodeBook.getSchoolCodeId() + "' AND code='"
 				+ schoolCodeBook.getCode() + "'";
-		connManager.executeCUD(rmQuery);
+		connManager.executeCUD(delQuery);
 	}
 
 	public void update(SchoolCodeBook schoolCodeBook) {
@@ -35,16 +39,27 @@ public class SchoolCodeBookDAO {
 	public List<SchoolCodeBook> getByCode(String code) {
 		String getByCodeQuery = "SELECT * FROM schoolcode WHERE code='" + code
 				+ "'";
-		ResultSet rs = connManager.executeRead(getByCodeQuery);
+		return getSchoolCodeBooks(getByCodeQuery);
+
+	}
+
+	public List<SchoolCodeBook> getBySchoolCodeId(int schoolCodeId) {
+		String getByCodeQuery = "SELECT * FROM schoolcode WHERE code='"
+				+ schoolCodeId + "'";
+		return getSchoolCodeBooks(getByCodeQuery);
+	}
+
+	private List<SchoolCodeBook> getSchoolCodeBooks(String getQuery) {
+		ResultSet rs = connManager.executeRead(getQuery);
 		List<SchoolCodeBook> schoolCodeBookList = new ArrayList<SchoolCodeBook>();
 		try {
 			while (rs.next()) {
 				SchoolCodeBook schoolCodeBook = new SchoolCodeBook(
 						rs.getString("code"), rs.getInt("groupNo"),
-						rs.getString("schoolCodeId"));
+						rs.getInt("schoolCodeId"));
 				schoolCodeBookList.add(schoolCodeBook);
-				return schoolCodeBookList;
 			}
+			return schoolCodeBookList;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

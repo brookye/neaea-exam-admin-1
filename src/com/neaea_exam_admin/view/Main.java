@@ -21,10 +21,11 @@ public class Main extends UI {
 
 	@Override
 	protected void init(VaadinRequest request) {
-		LoginForm lf = new LoginForm();
+		//LoginForm lf = new LoginForm();
+		ExamineeCreateForm ecf=new ExamineeCreateForm();
 		final VerticalLayout vlayout = new VerticalLayout();
 		setContent(vlayout);
-		vlayout.addComponent(lf);
+		vlayout.addComponent(ecf);
 
 	}
 
