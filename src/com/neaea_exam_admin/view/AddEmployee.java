@@ -14,6 +14,7 @@ import com.vaadin.ui.TextField;
  *
  * @author Misgana Bayetta <misgana.bayetta@gmail.com>
  */
+@SuppressWarnings("serial")
 public class AddEmployee extends CustomComponent {
     TextField empName = new TextField("Emp Name");
     TextField depName = new TextField("Department");

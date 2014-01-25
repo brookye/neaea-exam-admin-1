@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.neaea_exam_admin.entity.Examinee;
-import com.neaea_exam_admin.entity.SchoolCodeBook;
+import com.neaea_exam_admin.entity.SchoolCode;
 import com.neaea_exam_admin.utilities.ConnManager;
 
 public class ExamineeDAO {
@@ -22,13 +22,15 @@ public class ExamineeDAO {
 	public void persist(Examinee examinee) {
 		// TODO It will be better to prepare wrapper class for
 		// the PreparedStatement so that closing is automatically handled
-		String persistQuery = "INSERT INTO examinee VALUES(examineeId=NULL,?,?,?,?,?,?,?,?,?,?,?)";
+		String persistQuery = "INSERT INTO examinee (registrationConfirmationNo,photo,category,"
+				+ "nationality,Sight,sex,age,schoolCodeId,grandFatherName,fatherName,name"
+				+ ") VALUES(?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement pst = connManager.getPreparedStatement(persistQuery);
 		InputStream inp = new ByteArrayInputStream(examinee.getPhoto());
 		try {
-			pst.setString(2, examinee.getRegistrationConfirmationNo());
-			pst.setBinaryStream(3, inp, examinee.getPhoto().length);
-			pst.setString(3, examinee.getCatagory());
+			pst.setString(1, examinee.getRegistrationConfirmationNo());
+			pst.setBinaryStream(2, inp, examinee.getPhoto().length);
+			pst.setInt(3, examinee.getCatagory());
 			pst.setString(4, examinee.getNationality());
 			pst.setString(5, examinee.getSight());
 			pst.setString(6, examinee.getSex());
@@ -37,6 +39,7 @@ public class ExamineeDAO {
 			pst.setString(9, examinee.getGrandFatherName());
 			pst.setString(10, examinee.getFatherName());
 			pst.setString(11, examinee.getName());
+			pst.execute();
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -74,18 +77,20 @@ public class ExamineeDAO {
 				+ "*'";
 		return getExaminees(getQuery);
 	}
+
 	public List<Examinee> getById(int examineeId) {
-		String getQuery = "SELECT * FROM examinee WHERE examineeId="+examineeId;
+		String getQuery = "SELECT * FROM examinee WHERE examineeId="
+				+ examineeId;
 		return getExaminees(getQuery);
 	}
+
 	private List<Examinee> getExaminees(String getQuery) {
 		List<Examinee> examinees = new ArrayList<Examinee>();
 		ResultSet rs = connManager.executeRead(getQuery);
 		try {
 			while (rs.next()) {
-				SchoolCodeBook schoolCodeBook = new SchoolCodeBookDAO(
-						connManager).getBySchoolCodeId(
-						rs.getInt("schoolCodeId")).get(0);
+				SchoolCode schoolCodeBook = new SchoolCodeBookDAO(connManager)
+						.getBySchoolCodeId(rs.getInt("schoolCodeId")).get(0);
 				Examinee examinee = new Examinee(rs.getString("name"),
 						rs.getString("fatherName"),
 						rs.getString("grandFatherName"), schoolCodeBook,

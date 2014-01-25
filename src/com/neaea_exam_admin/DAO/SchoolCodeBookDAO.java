@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import com.neaea_exam_admin.utilities.ConnManager;
-import com.neaea_exam_admin.entity.SchoolCodeBook;
+import com.neaea_exam_admin.entity.SchoolCode;
 
 public class SchoolCodeBookDAO {
 	private ConnManager connManager;
@@ -14,21 +14,21 @@ public class SchoolCodeBookDAO {
 		connManager = _connManager;
 	}
 
-	public void persist(SchoolCodeBook schoolCodeBook) {
+	public void persist(SchoolCode schoolCodeBook) {
 		String persistQuery = "INSERT INTO schoolcode VALUES('"
 				+ schoolCodeBook.getCode() + "'," + schoolCodeBook.getGroupNo()
 				+ ",NULL)";
 		connManager.executeCUD(persistQuery);
 	}
 
-	public void delete(SchoolCodeBook schoolCodeBook) {
+	public void delete(SchoolCode schoolCodeBook) {
 		String delQuery = "DELETE FROM schoolcode WHERE schoolCodeId='"
 				+ schoolCodeBook.getSchoolCodeId() + "' AND code='"
 				+ schoolCodeBook.getCode() + "'";
 		connManager.executeCUD(delQuery);
 	}
 
-	public void update(SchoolCodeBook schoolCodeBook) {
+	public void update(SchoolCode schoolCodeBook) {
 		String updateQuery = "UPDATE schoolcode SET groupNo="
 				+ schoolCodeBook.getGroupNo() + "WHERE schoolCodeId='"
 				+ schoolCodeBook.getSchoolCodeId() + "' " + "AND code='"
@@ -36,25 +36,25 @@ public class SchoolCodeBookDAO {
 		connManager.executeCUD(updateQuery);
 	}
 
-	public List<SchoolCodeBook> getByCode(String code) {
+	public List<SchoolCode> getByCode(String code) {
 		String getByCodeQuery = "SELECT * FROM schoolcode WHERE code='" + code
 				+ "'";
 		return getSchoolCodeBooks(getByCodeQuery);
 
 	}
 
-	public List<SchoolCodeBook> getBySchoolCodeId(int schoolCodeId) {
+	public List<SchoolCode> getBySchoolCodeId(int schoolCodeId) {
 		String getByCodeQuery = "SELECT * FROM schoolcode WHERE code='"
 				+ schoolCodeId + "'";
 		return getSchoolCodeBooks(getByCodeQuery);
 	}
 
-	private List<SchoolCodeBook> getSchoolCodeBooks(String getQuery) {
+	private List<SchoolCode> getSchoolCodeBooks(String getQuery) {
 		ResultSet rs = connManager.executeRead(getQuery);
-		List<SchoolCodeBook> schoolCodeBookList = new ArrayList<SchoolCodeBook>();
+		List<SchoolCode> schoolCodeBookList = new ArrayList<SchoolCode>();
 		try {
 			while (rs.next()) {
-				SchoolCodeBook schoolCodeBook = new SchoolCodeBook(
+				SchoolCode schoolCodeBook = new SchoolCode(
 						rs.getString("code"), rs.getInt("groupNo"),
 						rs.getInt("schoolCodeId"));
 				schoolCodeBookList.add(schoolCodeBook);

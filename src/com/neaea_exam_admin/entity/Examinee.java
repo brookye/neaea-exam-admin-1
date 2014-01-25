@@ -4,18 +4,18 @@ public class Examinee {
 	private String name;
 	private String fatherName;
 	private String grandFatherName;
-	private SchoolCodeBook schoolCode; // FK
+	private SchoolCode schoolCode; // FK
 	private int age;
 	private String sex;
 	private String sight;
 	private String nationality;
 	private byte[] photo;
 	private String registrationConfirmationNo;
-	private String catagory;
+	private int catagory;
     private int examineeId;
 	public Examinee(String _name, String _fatherName, String _grandFatherName,
-			SchoolCodeBook _schoolCode, int _age, String _sex, String _sight,
-			String _nationality, String _catagory, byte[] _photo,
+			SchoolCode _schoolCode, int _age, String _sex, String _sight,
+			String _nationality, int _catagory, byte[] _photo,
 			String _registrationConfiramtinNo,int _examineeId) {
             name=_name;
             fatherName=_fatherName;
@@ -35,11 +35,11 @@ public class Examinee {
 		return name;
 	}
 
-	public String getCatagory() {
+	public int getCatagory() {
 		return catagory;
 	}
 
-	public void setCatagory(String catagory) {
+	public void setCatagory(int catagory) {
 		this.catagory = catagory;
 	}
 
@@ -71,11 +71,11 @@ public class Examinee {
 		this.grandFatherName = grandFatherName;
 	}
 
-	public SchoolCodeBook getSchoolCode() {
+	public SchoolCode getSchoolCode() {
 		return schoolCode;
 	}
 
-	public void setSchoolCode(SchoolCodeBook schoolCode) {
+	public void setSchoolCode(SchoolCode schoolCode) {
 		this.schoolCode = schoolCode;
 	}
 
@@ -111,11 +111,11 @@ public class Examinee {
 		this.nationality = nationality;
 	}
 
-	public String getCategory() {
+	public int  getCategory() {
 		return catagory;
 	}
 
-	public void setCategory(String category) {
+	public void setCategory(int category) {
 		this.catagory = category;
 	}
 

@@ -32,7 +32,7 @@ public class ExamDAO {
 		connManager.executeCUD(updateQuery);
 	}
     public List<Exam> getExamById(int id){
-    	String getQuery="SELECT FORM exam WHERE id='"+id+"'";
+    	String getQuery="SELECT * FROM exam WHERE id='"+id+"'";
     	return getExam(getQuery);
     }
 	public List<Exam> getExam(String getQuery) {
@@ -48,6 +48,20 @@ public class ExamDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		finally{
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		 	
+		}
 		return null;
+	}
+
+	public List<Exam> getAll() {
+		String getQuery="SELECT * FROM exam";
+		return getExam(getQuery);
 	}
 }
