@@ -11,14 +11,11 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import org.apache.tools.ant.taskdefs.Sleep;
-
 import com.neaea_exam_admin.DAO.CategoryDAO;
 import com.neaea_exam_admin.DAO.ExamDAO;
 import com.neaea_exam_admin.DAO.ExamExamineeDAO;
 import com.neaea_exam_admin.DAO.ExamineeDAO;
 import com.neaea_exam_admin.DAO.SchoolCodeBookDAO;
-import com.neaea_exam_admin.entity.Category;
 import com.neaea_exam_admin.entity.Exam;
 import com.neaea_exam_admin.entity.ExamExaminee;
 import com.neaea_exam_admin.entity.Examinee;

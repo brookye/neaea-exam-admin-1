@@ -5,7 +5,6 @@ import java.util.List;
 import com.neaea_exam_admin.DAO.RegionDAO;
 import com.neaea_exam_admin.DAO.ZoneDAO;
 import com.neaea_exam_admin.controller.WoredaFormController;
-import com.neaea_exam_admin.controller.ZoneController;
 import com.neaea_exam_admin.entity.Region;
 import com.neaea_exam_admin.entity.Zone;
 import com.neaea_exam_admin.utilities.ConnManager;
@@ -40,6 +39,7 @@ public class WoredaForm extends CustomComponent {
 		CBRegion = new ComboBox("Region");
 		CBRegion.addValueChangeListener(wfc);
 		CBZone = new ComboBox("Zone");
+		CBZone.setImmediate(true);
 		CBZone.setWidth(160, Unit.POINTS);
 		CBRegion.setWidth(160, Unit.POINTS);
 		TFWoreda.setWidth(160, Unit.POINTS);
@@ -63,10 +63,12 @@ public class WoredaForm extends CustomComponent {
 	public void fillZone() {
 		CBZone.removeAllItems();
 		ZoneDAO zoneDAO = new ZoneDAO(new ConnManager());
+		System.out.println("INFO:CBRegion value:"+(Integer)CBRegion.getValue());
 		List<Zone> zones = zoneDAO.getByRegionId((Integer)CBRegion.getValue());
 		for (Zone zn : zones) {
-			CBZone.addItem(zn.getZoneCode());
-			CBZone.setItemCaption(zn.getZoneCode(), zn.getZoneName());
+			System.out.println("INFO:zone name:"+zn.getZoneName()+" id:"+zn.getZoneCode());
+			CBZone.addItem(zn.getZoneId());
+			CBZone.setItemCaption(zn.getZoneId(), zn.getZoneName());
 		}
 	}
 }

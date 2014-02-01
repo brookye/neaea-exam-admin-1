@@ -18,8 +18,9 @@ public class WoredaDAO {
 
 	public void persist(Woreda woreda) {
 		String query = "INSERT INTO woreda VALUES(NULL,"
-				+ woreda.getWoredaCode() + "," + woreda.getWoredaName() + ","
+				+ woreda.getWoredaCode() + ",'" + woreda.getWoredaName() + "',"
 				+ woreda.getZone().getZoneId() + ")";
+		System.out.println("INFO:"+query);
 		connManager.executeCUD(query);
 	}
 
@@ -27,16 +28,19 @@ public class WoredaDAO {
 		String query = "SELECT * FROM woreda WHERE zoneId=" + zoneId;
 		return get(query);
 	}
-
+    public List<Woreda> getById(int woredaId){
+    	String query = "SELECT * FROM woreda WHERE woredId=" + woredaId;
+		return get(query);
+    }
 	private List<Woreda> get(String query) {
 		List<Woreda> woredas = new ArrayList<Woreda>();
 		ResultSet rs = connManager.executeRead(query);
 		ZoneDAO zoneDAO = new ZoneDAO(connManager);
 		try {
 			while (rs.next()) {
-				Zone zone = zoneDAO.getZoneById(rs.getInt("regioe")).get(0);
+				Zone zone = zoneDAO.getZoneById(rs.getInt("zoneId")).get(0);
 				Woreda woreda = new Woreda(zone, rs.getString("woredaname"),
-						rs.getInt("woredacode"), 0);
+						rs.getInt("woredacode"),rs.getInt("woredId"));
 				woredas.add(woreda);
 			}
 

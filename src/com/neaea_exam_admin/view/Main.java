@@ -24,13 +24,13 @@ public class Main extends UI {
 		//LoginForm lf = new LoginForm();
 		NavigationMenu nm=new NavigationMenu();
 		ExamineeCreateForm ecf=new ExamineeCreateForm();
-		WoredaAllowance wa=new WoredaAllowance();
+		WoredaAllowanceForm wa=new WoredaAllowanceForm();
 		WoredaForm wf= new WoredaForm();
 		ZoneForm zf = new ZoneForm();
 		final VerticalLayout vlayout = new VerticalLayout();
 		setContent(vlayout);
 		vlayout.addComponent(nm);
-		vlayout.addComponent(wf);
+		vlayout.addComponent(wa);
 		
 		
 

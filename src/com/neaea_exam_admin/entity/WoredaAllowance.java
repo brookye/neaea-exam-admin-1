@@ -7,23 +7,35 @@ package com.neaea_exam_admin.entity;
  */
 // TODO use decimal types for decimal column types
 public class WoredaAllowance {
-	private int lowScale;
-	private int meddiumScale;
-	private int highScale;
+	private float lowScale;
+	private float meddiumScale;
+	private float highScale;
+	private float desertAllowance;
 	private Woreda woreda; // FK
-	private int woredaAllowanceId; // PK
 
-	public WoredaAllowance(int _lowScale, int _meddiumScale, int _highScale,
-			Woreda _woreda, int _woredAllowanceId) {
-     lowScale=_lowScale;
-     meddiumScale=_meddiumScale;
-     highScale=_highScale;
-     woreda=_woreda;
-     woredaAllowanceId=_woredAllowanceId;
-     
+	private String woredaAllowanceId; // PK
+
+	public WoredaAllowance(float _lowScale, float _meddiumScale,
+			float _highScale, float _desertAllowance, Woreda _woreda,
+			String _woredAllowanceId) {
+		desertAllowance = _desertAllowance;
+		lowScale = _lowScale;
+		meddiumScale = _meddiumScale;
+		highScale = _highScale;
+		woreda = _woreda;
+		woredaAllowanceId = _woredAllowanceId;
+
 	}
 
-	public int getLowScale() {
+	public float getDesertAllowance() {
+		return desertAllowance;
+	}
+
+	public void setDesertAllowance(float desertAllowance) {
+		this.desertAllowance = desertAllowance;
+	}
+
+	public float getLowScale() {
 		return lowScale;
 	}
 
@@ -31,7 +43,7 @@ public class WoredaAllowance {
 		this.lowScale = lowScale;
 	}
 
-	public int getMiddiumScal() {
+	public float getMiddiumScal() {
 		return meddiumScale;
 	}
 
@@ -39,8 +51,24 @@ public class WoredaAllowance {
 		this.meddiumScale = middiumScal;
 	}
 
-	public int getHighScale() {
+	public float getHighScale() {
 		return highScale;
+	}
+
+	public float getMeddiumScale() {
+		return meddiumScale;
+	}
+
+	public void setMeddiumScale(float meddiumScale) {
+		this.meddiumScale = meddiumScale;
+	}
+
+	public void setLowScale(float lowScale) {
+		this.lowScale = lowScale;
+	}
+
+	public void setHighScale(float highScale) {
+		this.highScale = highScale;
 	}
 
 	public void setHighScale(int highScale) {
@@ -55,11 +83,11 @@ public class WoredaAllowance {
 		this.woreda = woreda;
 	}
 
-	public int getWoredaAllowanceId() {
+	public String getWoredaAllowanceId() {
 		return woredaAllowanceId;
 	}
 
-	public void setWoredaAllowanceId(int woredaAllowanceId) {
+	public void setWoredaAllowanceId(String woredaAllowanceId) {
 		this.woredaAllowanceId = woredaAllowanceId;
 	}
 

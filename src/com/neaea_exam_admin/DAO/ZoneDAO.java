@@ -34,6 +34,7 @@ public class ZoneDAO {
 	}
 	public List<Zone> getZoneById(int id){
 		String query="SELECT * FROM zone WHERE zoneId="+id;
+		System.out.println("INFO:"+query);
 		return get(query);
 		
 	}
@@ -44,7 +45,7 @@ public class ZoneDAO {
 		try {
 			while (rs.next()) {
 				Region region=regionDAO.getById(rs.getInt("regioncode")).get(0);
-				Zone zone = new Zone(region,rs.getString("zonename"),rs.getInt("zonecode"),0);
+				Zone zone = new Zone(region,rs.getString("zonename"),rs.getInt("zonecode"),rs.getInt("zoneid"));
 				zones.add(zone);
 			}
 
