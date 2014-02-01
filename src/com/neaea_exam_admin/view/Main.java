@@ -22,10 +22,17 @@ public class Main extends UI {
 	@Override
 	protected void init(VaadinRequest request) {
 		//LoginForm lf = new LoginForm();
+		NavigationMenu nm=new NavigationMenu();
 		ExamineeCreateForm ecf=new ExamineeCreateForm();
+		WoredaAllowance wa=new WoredaAllowance();
+		WoredaForm wf= new WoredaForm();
+		ZoneForm zf = new ZoneForm();
 		final VerticalLayout vlayout = new VerticalLayout();
 		setContent(vlayout);
-		vlayout.addComponent(ecf);
+		vlayout.addComponent(nm);
+		vlayout.addComponent(wf);
+		
+		
 
 	}
 

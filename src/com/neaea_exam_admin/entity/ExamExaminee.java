@@ -11,7 +11,7 @@ public class ExamExaminee {
 		id = _id;
 	}
 
-	public Examinee getExamineeId() {
+	public Examinee getExaminee() {
 		return examineeId;
 	}
 

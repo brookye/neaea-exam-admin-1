@@ -44,8 +44,8 @@ public class SchoolCodeBookDAO {
 	}
 
 	public List<SchoolCode> getBySchoolCodeId(int schoolCodeId) {
-		String getByCodeQuery = "SELECT * FROM schoolcode WHERE code='"
-				+ schoolCodeId + "'";
+		String getByCodeQuery = "SELECT * FROM schoolcode WHERE schoolCodeId="
+				+ schoolCodeId;
 		return getSchoolCodeBooks(getByCodeQuery);
 	}
 

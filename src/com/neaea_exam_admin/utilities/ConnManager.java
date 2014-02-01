@@ -14,17 +14,20 @@ import java.sql.Statement;
  * 
  */
 public class ConnManager {
-	private String dbUserPassword="realengineer";
-	private String dbUserName="root";
-	private String schemaName="neaeaexamadmin";	
+	private String dbUserPassword = "realengineer";
+	private String dbUserName = "root";
+	private String schemaName = "neaeaexamadmin";
 	private int port = 3306;
-    private Connection connection;
+	private Connection connection;
+
 	private String buildConnString() {
 		return "jdbc:mysql://localhost:" + port + "/" + schemaName;
 	}
-    public ConnManager(){
-    	openConn();
-    }
+
+	public ConnManager() {
+		openConn();
+	}
+
 	public ConnManager(String _dbUserName, String _dbUserPassword,
 			String _schemaName) {
 		dbUserName = _dbUserName;
@@ -32,16 +35,18 @@ public class ConnManager {
 		schemaName = _schemaName;
 		openConn();
 	}
+
 	/**
 	 * opens a connection to the database
+	 * 
 	 * @return a Connection object
 	 */
-    private  void openConn(){
-    	try {
+	private void openConn() {
+		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection _connection = (Connection) DriverManager.getConnection(
 					buildConnString(), dbUserName, dbUserPassword);
-			connection=_connection;
+			connection = _connection;
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -49,14 +54,16 @@ public class ConnManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	
-    }
-    /**
-     * closes a connection that is left open
-     * @param connection
-     */
-   
-	public void close(){
+
+	}
+
+	/**
+	 * closes a connection that is left open
+	 * 
+	 * @param connection
+	 */
+
+	public void close() {
 		try {
 			connection.close();
 		} catch (SQLException e) {
@@ -65,27 +72,29 @@ public class ConnManager {
 		}
 	}
 
- 	/**
+	/**
 	 * for queries of type select
 	 * 
 	 * @param sqlString
 	 * @return ResultSet object
 	 */
 
-	public ResultSet executeRead(String sqlString) {		
+	public ResultSet executeRead(String sqlString) {
 		try {
+			if (connection == null) {
+				openConn();
+			}
 			Statement stmt = connection.createStatement();
 			ResultSet rst = stmt.executeQuery(sqlString);
 			return rst;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		finally{
-			
+		} finally {
+
 		}
 		return null;
-		
+
 	}
 
 	/**
@@ -96,22 +105,23 @@ public class ConnManager {
 	 */
 	public void executeCUD(String sqlString) {
 		@SuppressWarnings("unused")
-		int  rowsAffected= 0;		
+		int rowsAffected = 0;
 		try {
+			if (connection == null) {
+				openConn();
+			}
 			Statement stmt = connection.createStatement();
 			rowsAffected = stmt.executeUpdate(sqlString);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			//do sth here like closing connection
 		}
-		finally{
-		 if(connection!=null){
-			close();
-		 }
-		}
-		
+
 	}
-	public PreparedStatement getPreparedStatement(String prepStmtQuery){
+
+	public PreparedStatement getPreparedStatement(String prepStmtQuery) {
 		try {
 			return connection.prepareStatement(prepStmtQuery);
 		} catch (SQLException e) {
@@ -120,17 +130,17 @@ public class ConnManager {
 		}
 		return null;
 	}
-   
+
 	/*
 	 * This is basically for primitive testing
 	 */
 	public static void main(String[] args) {
-		ConnManager cm = new ConnManager("root","realengineer","neaeaexamadmin");
+		ConnManager cm = new ConnManager("root", "realengineer",
+				"neaeaexamadmin");
 		ResultSet rs = cm.executeRead("SELECT * FROM exam");
 		if (rs == null) {
 			System.out.println("returned null");
-		}
-		else{
+		} else {
 			System.out.println("Successfully connected and executed");
 		}
 

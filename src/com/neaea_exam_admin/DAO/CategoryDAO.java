@@ -11,44 +11,55 @@ import com.neaea_exam_admin.utilities.ConnManager;
 
 public class CategoryDAO {
 	private ConnManager connManager;
-  public CategoryDAO(ConnManager _connManager){
-	  connManager=_connManager;
-  }
-  public void persist(Category category){
-	  
-  }
-  public void delete(Category category){
-	  
-  }
-  public void update(Category category){
-	  
-  }
-  public List<Category> getCategory(String getQuery){
-	  ResultSet rs = connManager.executeRead(getQuery);
+
+	public CategoryDAO(ConnManager _connManager) {
+		connManager = _connManager;
+	}
+
+	public void persist(Category category) {
+
+	}
+
+	public void delete(Category category) {
+
+	}
+
+	public void update(Category category) {
+
+	}
+
+	public List<Category> getCategory(String getQuery) {
+		ResultSet rs = connManager.executeRead(getQuery);
 		List<Category> categories = new ArrayList<Category>();
 		try {
 			while (rs.next()) {
-				Category category= new Category(rs.getInt("id"), rs.getString("name"));
+				Category category = new Category(rs.getInt("id"),
+						rs.getString("name"));
 				categories.add(category);
 			}
 			return categories;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		finally{
+		} finally {
 			try {
 				rs.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		 	
+
 		}
-		return null; 
-  }
-  public List<Category> getAll(){
-	  String query="SELECT * FROM category";
-	  return getCategory(query);
-  }
+		return null;
+	}
+
+	public List<Category> getAll() {
+		String query = "SELECT * FROM category";
+		return getCategory(query);
+	}
+
+	public List<Category> getById(int id) {
+		String query = "SELECT * FROM category WHERE id=" + id;
+		return getCategory(query);
+	}
 }

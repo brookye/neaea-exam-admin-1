@@ -18,10 +18,11 @@ public class ExamExamineeDAO {
 	}
 
 	public void persist(ExamExaminee examExaminee) {
-		String persistQuery = "INSERT INTO exam_examinee VALUES(id=NULL,examineeId='"
-				+ examExaminee.getExamineeId().getExamineeId()
-				+ "',examId='"
-				+ examExaminee.getExamId().getId() + "'";
+		String persistQuery = "INSERT INTO neaeaexamadmin.exam_examinee VALUES(NULL,"
+				+ examExaminee.getExamId().getId()
+				+ ","
+				+ examExaminee.getExaminee().getExamineeId() + ")";
+		System.out.println("Executing-" + persistQuery);
 		connManager.executeCUD(persistQuery);
 	}
 
@@ -33,14 +34,19 @@ public class ExamExamineeDAO {
 
 	public void update(ExamExaminee examExaminee) {
 		String updateQuery = "UPDATE exam_examinee SET examineeId='"
-				+ examExaminee.getExamineeId().getExamineeId() + "',examId='"
+				+ examExaminee.getExaminee().getExamineeId() + "',examId='"
 				+ examExaminee.getExamId().getId() + "'";
 		connManager.executeCUD(updateQuery);
 	}
-    public  List<ExamExaminee> getExamExamineeById(int id){
-    	String getQuery="SELECT FROM exam_examinee WHERE id='"+id;
-    	return getExamExaminee(getQuery);
-    }
+
+	public List<ExamExaminee> getExamExamineeById(int id) {
+		String getQuery = "SELECT FROM exam_examinee WHERE id='" + id;
+		return getExamExaminee(getQuery);
+	}
+public List<ExamExaminee> getExamExamineeByExaminee(Examinee examinee){
+	String getQuery="SELECT * FROM exam_examinee WHERE examineeId="+examinee.getExamineeId();
+	return getExamExaminee(getQuery);
+}
 	private List<ExamExaminee> getExamExaminee(String getQuery) {
 		List<ExamExaminee> examExaminees = new ArrayList<ExamExaminee>();
 		ResultSet rs = connManager.executeRead(getQuery);

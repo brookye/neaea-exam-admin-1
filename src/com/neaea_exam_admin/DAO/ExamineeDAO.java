@@ -11,6 +11,7 @@ import java.util.List;
 import com.neaea_exam_admin.entity.Examinee;
 import com.neaea_exam_admin.entity.SchoolCode;
 import com.neaea_exam_admin.utilities.ConnManager;
+import com.vaadin.ui.Notification;
 
 public class ExamineeDAO {
 	private ConnManager connManager;
@@ -30,7 +31,7 @@ public class ExamineeDAO {
 		try {
 			pst.setString(1, examinee.getRegistrationConfirmationNo());
 			pst.setBinaryStream(2, inp, examinee.getPhoto().length);
-			pst.setInt(3, examinee.getCatagory());
+			pst.setInt(3, examinee.getCatagory().getId());
 			pst.setString(4, examinee.getNationality());
 			pst.setString(5, examinee.getSight());
 			pst.setString(6, examinee.getSex());
@@ -74,7 +75,7 @@ public class ExamineeDAO {
 	 */
 	public List<Examinee> getByName(String name) {
 		String getQuery = "SELECT * FROM examinee WHERE name LIKE '" + name
-				+ "*'";
+				+ "%'";
 		return getExaminees(getQuery);
 	}
 
@@ -85,23 +86,28 @@ public class ExamineeDAO {
 	}
 
 	private List<Examinee> getExaminees(String getQuery) {
+
 		List<Examinee> examinees = new ArrayList<Examinee>();
 		ResultSet rs = connManager.executeRead(getQuery);
 		try {
 			while (rs.next()) {
 				SchoolCode schoolCodeBook = new SchoolCodeBookDAO(connManager)
 						.getBySchoolCodeId(rs.getInt("schoolCodeId")).get(0);
+				CategoryDAO categoryDAO = new CategoryDAO(connManager);
+
 				Examinee examinee = new Examinee(rs.getString("name"),
 						rs.getString("fatherName"),
 						rs.getString("grandFatherName"), schoolCodeBook,
 						rs.getInt("age"), rs.getString("sex"),
 						rs.getString("Sight"), rs.getString("nationality"),
-						rs.getString("catagory"), rs.getBlob("photo").getBytes(
-								1, (int) rs.getBlob("photo").length()),
-						rs.getString("registrationConfiramtinNo"),
+						categoryDAO.getById(rs.getInt("category")).get(0), rs
+								.getBlob("photo").getBytes(1,
+										(int) rs.getBlob("photo").length()),
+						rs.getString("registrationConfirmationNo"),
 						rs.getInt("examineeId"));
 				examinees.add(examinee);
 			}
+
 			return examinees;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
