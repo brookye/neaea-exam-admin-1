@@ -23,14 +23,17 @@ public class Main extends UI {
 	protected void init(VaadinRequest request) {
 		//LoginForm lf = new LoginForm();
 		NavigationMenu nm=new NavigationMenu();
-		ExamineeCreateForm ecf=new ExamineeCreateForm();
+		ExamineeCreateForm ecrf=new ExamineeCreateForm();
 		WoredaAllowanceForm wa=new WoredaAllowanceForm();
 		WoredaForm wf= new WoredaForm();
 		ZoneForm zf = new ZoneForm();
+		SchoolForm sf=new SchoolForm();
+		ExamCenterForm ecf=new ExamCenterForm();
+		ExamCenterAssignmentForm ecaf=new ExamCenterAssignmentForm();
 		final VerticalLayout vlayout = new VerticalLayout();
 		setContent(vlayout);
 		vlayout.addComponent(nm);
-		vlayout.addComponent(wa);
+		vlayout.addComponent(ecaf);
 		
 		
 

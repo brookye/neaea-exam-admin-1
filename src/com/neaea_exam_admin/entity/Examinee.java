@@ -4,7 +4,7 @@ public class Examinee {
 	private String name;
 	private String fatherName;
 	private String grandFatherName;
-	private SchoolCode schoolCode; // FK
+	private School school; // FK
 	private int age;
 	private String sex;
 	private String sight;
@@ -14,13 +14,13 @@ public class Examinee {
 	private Category category;
     private int examineeId;
 	public Examinee(String _name, String _fatherName, String _grandFatherName,
-			SchoolCode _schoolCode, int _age, String _sex, String _sight,
+			School _schoolCode, int _age, String _sex, String _sight,
 			String _nationality, Category _catagory, byte[] _photo,
 			String _registrationConfiramtinNo,int _examineeId) {
             name=_name;
             fatherName=_fatherName;
             grandFatherName=_grandFatherName;
-            schoolCode=_schoolCode;
+            school=_schoolCode;
             age=_age;
             sex=_sex;
             sight=_sight;
@@ -71,12 +71,14 @@ public class Examinee {
 		this.grandFatherName = grandFatherName;
 	}
 
-	public SchoolCode getSchoolCode() {
-		return schoolCode;
+	
+
+	public School getSchool() {
+		return school;
 	}
 
-	public void setSchoolCode(SchoolCode schoolCode) {
-		this.schoolCode = schoolCode;
+	public void setSchool(School school) {
+		this.school = school;
 	}
 
 	public int getAge() {

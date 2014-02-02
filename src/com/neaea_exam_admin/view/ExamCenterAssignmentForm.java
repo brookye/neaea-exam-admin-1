@@ -1,16 +1,15 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.neaea_exam_admin.view;
 
 import java.util.List;
 
+import com.neaea_exam_admin.DAO.ExamCenterDAO;
 import com.neaea_exam_admin.DAO.RegionDAO;
 import com.neaea_exam_admin.DAO.SchoolDAO;
 import com.neaea_exam_admin.DAO.WoredaDAO;
 import com.neaea_exam_admin.DAO.ZoneDAO;
+import com.neaea_exam_admin.controller.ExamCenterAssignmentFormController;
 import com.neaea_exam_admin.controller.ExamCenterController;
+import com.neaea_exam_admin.entity.ExamCenter;
 import com.neaea_exam_admin.entity.Region;
 import com.neaea_exam_admin.entity.School;
 import com.neaea_exam_admin.entity.Woreda;
@@ -18,30 +17,27 @@ import com.neaea_exam_admin.entity.Zone;
 import com.neaea_exam_admin.utilities.ConnManager;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.TextField;
 
-/**
- * 
- * @author Misgana Bayetta <misgana.bayetta@gmail.com>
- */
-public class ExamCenterForm extends CustomComponent {
-
+public class ExamCenterAssignmentForm extends CustomComponent {
 	public ComboBox CBWoreda;
 	public ComboBox CBZone;
 	public ComboBox CBRegion;
 	public ComboBox CBSchoolName;
-	public TextField TFGroupNo;
-	public TextField TFDistance;
-	public TextField TFNoOfClassRoom;
-	public Button BTAdd;
+	public ComboBox CBExamCenter;
+	SchoolDAO schoolDAO = new SchoolDAO(new ConnManager());
+	public Button BTAssign;
 	public FormLayout fl;
-	private ExamCenterController ecc = new ExamCenterController(this);
+	
+	private ExamCenterAssignmentFormController ecafc = new ExamCenterAssignmentFormController(
+			this);
 
-	public ExamCenterForm() {
+	public ExamCenterAssignmentForm() {
 
 		init();
 		setCompositionRoot(fl);
@@ -83,31 +79,36 @@ public class ExamCenterForm extends CustomComponent {
 
 			}
 		});
-		CBRegion.addValueChangeListener(ecc);
+		CBRegion.addValueChangeListener(ecafc);
 		CBRegion.setWidth(160, Unit.POINTS);
 		CBRegion.setNullSelectionAllowed(false);
 		CBRegion.setNewItemsAllowed(false);
 		CBSchoolName = new ComboBox("School name");
+		CBSchoolName.addValueChangeListener(new ValueChangeListener() {
+
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				fillExamCenter();
+
+			}
+		});
 		CBSchoolName.setWidth(160, Unit.POINTS);
 		CBSchoolName.setNullSelectionAllowed(false);
 		CBSchoolName.setNewItemsAllowed(false);
-		TFGroupNo = new TextField("Group No");
-		TFGroupNo.setWidth(160, Unit.POINTS);
-		TFDistance = new TextField("Distance");
-		TFDistance.setWidth(160, Unit.POINTS);
-		TFNoOfClassRoom = new TextField("No of classroom");
-		TFNoOfClassRoom.setWidth(160, Unit.POINTS);
-		BTAdd = new Button("Add");
-		BTAdd.addClickListener(ecc);
+		CBExamCenter = new ComboBox("Exam center");
+		CBExamCenter.setWidth(160, Unit.POINTS);
+		CBExamCenter.setNullSelectionAllowed(false);
+		CBExamCenter.setNewItemsAllowed(false);
+		BTAssign = new Button("Assign");
+		BTAssign.addClickListener(ecafc);
 		fl = new FormLayout();
+		
 		fl.addComponent(CBRegion);
 		fl.addComponent(CBZone);
 		fl.addComponent(CBWoreda);
 		fl.addComponent(CBSchoolName);
-		fl.addComponent(TFGroupNo);
-		fl.addComponent(TFNoOfClassRoom);
-		fl.addComponent(TFDistance);
-		fl.addComponent(BTAdd);
+		fl.addComponent(CBExamCenter);		
+		fl.addComponent(BTAssign);
 	}
 
 	private void fillRegion() {
@@ -146,12 +147,23 @@ public class ExamCenterForm extends CustomComponent {
 
 	public void fillSchool() {
 		CBSchoolName.removeAllItems();
-		SchoolDAO schoolDAO = new SchoolDAO(new ConnManager());
+		
 		List<School> schools = schoolDAO.getByWoredaId((Integer)CBWoreda.getValue());
 		for (School s : schools) {
 
 			CBSchoolName.addItem(s.getCode());
 			CBSchoolName.setItemCaption(s.getCode(), s.getSchoolName());
+		}
+	}
+	public void fillExamCenter() {
+		CBExamCenter.removeAllItems();
+		ExamCenterDAO examCenterDAO=new ExamCenterDAO(new ConnManager());
+		List<School> schools = schoolDAO.getByWoredaId((Integer)CBWoreda.getValue());
+		List<ExamCenter> examCenters=examCenterDAO.getByWoreda((Integer)CBWoreda.getValue());
+		for (ExamCenter  e : examCenters) {
+
+			CBExamCenter.addItem(e.getGroupNo());
+			CBExamCenter.setItemCaption(e.getGroupNo(),e.getSchool().getSchoolName());
 		}
 	}
 }

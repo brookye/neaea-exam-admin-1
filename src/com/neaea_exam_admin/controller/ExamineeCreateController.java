@@ -15,11 +15,11 @@ import com.neaea_exam_admin.DAO.CategoryDAO;
 import com.neaea_exam_admin.DAO.ExamDAO;
 import com.neaea_exam_admin.DAO.ExamExamineeDAO;
 import com.neaea_exam_admin.DAO.ExamineeDAO;
-import com.neaea_exam_admin.DAO.SchoolCodeBookDAO;
+import com.neaea_exam_admin.DAO.SchoolDAO;
 import com.neaea_exam_admin.entity.Exam;
 import com.neaea_exam_admin.entity.ExamExaminee;
 import com.neaea_exam_admin.entity.Examinee;
-import com.neaea_exam_admin.entity.SchoolCode;
+import com.neaea_exam_admin.entity.School;
 import com.neaea_exam_admin.utilities.ConnManager;
 import com.neaea_exam_admin.utilities.Environment;
 import com.neaea_exam_admin.utilities.ImageUtil;
@@ -51,7 +51,7 @@ public class ExamineeCreateController implements ClickListener,
 	ExamineeDAO examineeDAO = new ExamineeDAO(connManager);
 	ExamExamineeDAO examExamineDAO = new ExamExamineeDAO(connManager);
 	ExamDAO examDAO = new ExamDAO(connManager);
-	SchoolCodeBookDAO schoolCodeBookDAO = new SchoolCodeBookDAO(connManager);
+	SchoolDAO schoolDAO = new SchoolDAO(connManager);
 	CategoryDAO categoryDAO = new CategoryDAO(connManager);
 
 	public ExamineeCreateController(ExamineeCreateForm _ecf) {
@@ -95,14 +95,14 @@ public class ExamineeCreateController implements ClickListener,
 
 			// get the schoolcodeBook
 
-			SchoolCode schoolCodeBook = schoolCodeBookDAO.getByCode(
+			School school = schoolDAO.getByCode(
 					ecf.schoolCode.getValue()).get(0);
 
 			// persist examinee
 
 			Examinee examinee = new Examinee(ecf.fName.getValue(),
 					ecf.mName.getValue(), ecf.gfName.getValue(),
-					schoolCodeBook, Integer.valueOf(ecf.age.getValue()),
+					school, Integer.valueOf(ecf.age.getValue()),
 					(String) ecf.sex.getValue(), (String) ecf.sight.getValue(),
 					(String) ecf.nationality.getValue(), categoryDAO.getById(
 							(Integer) ecf.category.getValue()).get(0),
