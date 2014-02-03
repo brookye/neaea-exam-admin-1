@@ -17,8 +17,9 @@ public class ZoneDAO {
 	}
 
 	public void persist(Zone zone) {
-		String persistQuery = "INSERT INTO zone VALUES(NULL," + zone.getZoneCode()
+		String persistQuery = "INSERT INTO zone (zonecode,zonename,regioncode) VALUES(" + zone.getZoneCode()
 				+ ",'" + zone.getZoneName() + "'," + zone.getRegionCode().getRegionCode() + ")";
+		System.out.println(persistQuery);
 		connManager.executeCUD(persistQuery);
 	}
     public List<Zone> getByRegionId(int regionId){

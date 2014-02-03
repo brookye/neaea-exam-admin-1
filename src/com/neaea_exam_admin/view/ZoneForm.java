@@ -36,6 +36,8 @@ public class ZoneForm extends CustomComponent {
 		BTAddZone.addClickListener(zc);
 		CBRegion = new ComboBox("Region");
 		CBRegion.setWidth(160, Unit.POINTS);
+		CBRegion.setNullSelectionAllowed(false);
+		CBRegion.setNewItemsAllowed(false);
 		TFZone.setWidth(160, Unit.POINTS);
 		TFZoneCode.setWidth(160, Unit.POINTS);		
 		fl = new FormLayout();

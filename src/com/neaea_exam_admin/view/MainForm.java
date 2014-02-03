@@ -29,6 +29,7 @@ public class MainForm extends UI implements Command {
 	public ExamCenterForm ecf = new ExamCenterForm();
 	public final VerticalLayout vlayout = new VerticalLayout();
 	ExamCenterAssignmentForm ecaf = new ExamCenterAssignmentForm();
+	UserForm uf = new UserForm();
 	LoginForm lf = new LoginForm();
 
 	@WebServlet(value = "/*", asyncSupported = true)
@@ -41,20 +42,65 @@ public class MainForm extends UI implements Command {
 
 		setContent(vlayout);
 		vlayout.addComponent(nm);
-		vlayout.addComponent(ecaf);
-        nm.zone.setCommand(this);
-        nm.registerExaminee.setCommand(this);
+		AssignMenuItemEventHandler(nm);
+		
 	}
-
+    public void AssignMenuItemEventHandler(NavigationMenu nm){
+    	nm.zone.setCommand(this);
+		nm.registerExaminee.setCommand(this);
+		nm.newUser.setCommand(this);
+		nm.woreda.setCommand(this);
+		nm.newSchool.setCommand(this);
+		nm.assingExamCenter.setCommand(this);
+		nm.woredaAllowance.setCommand(this);
+		nm.newExamCenter.setCommand(this);
+    }
 	public void openZoneForm() {
 		vlayout.removeAllComponents();
-		vlayout.addComponent(nm);		
+		vlayout.addComponent(nm);
 		vlayout.addComponent(zf);
 	}
+
 	public void openExamineeCreateForm() {
 		vlayout.removeAllComponents();
-		vlayout.addComponent(nm);		
+		vlayout.addComponent(nm);
 		vlayout.addComponent(ecrf);
+	}
+
+	public void openUserForm() {
+		vlayout.removeAllComponents();
+		vlayout.addComponent(nm);
+		vlayout.addComponent(uf);
+	}
+
+	public void openExamCenterForm() {
+		vlayout.removeAllComponents();
+		vlayout.addComponent(nm);
+		vlayout.addComponent(ecf);
+	}
+
+	public void openSchoolForm() {
+		vlayout.removeAllComponents();
+		vlayout.addComponent(nm);
+		vlayout.addComponent(sf);
+	}
+
+	public void openWoredaForm() {
+		vlayout.removeAllComponents();
+		vlayout.addComponent(nm);
+		vlayout.addComponent(wf);
+	}
+
+	public void openExamCenterAssignmentForm() {
+		vlayout.removeAllComponents();
+		vlayout.addComponent(nm);
+		vlayout.addComponent(ecaf);
+	}
+
+	public void openWoredaAllowanceForm() {
+		vlayout.removeAllComponents();
+		vlayout.addComponent(nm);
+		vlayout.addComponent(wa);
 	}
 
 	@Override
@@ -71,12 +117,24 @@ public class MainForm extends UI implements Command {
 
 	@Override
 	public void menuSelected(MenuItem selectedItem) {
-		int formId=selectedItem.getId();
-		if(formId==nm.zone.getId()){
+		int formId = selectedItem.getId();
+		if (formId == nm.zone.getId()) {
 			openZoneForm();
-		}
-		else if(formId==nm.registerExaminee.getId()){
+		} else if (formId == nm.registerExaminee.getId()) {
 			openExamineeCreateForm();
+		} else if (formId == nm.newUser.getId()) {
+			openUserForm();
+		} else if (formId == nm.woreda.getId()) {
+			openWoredaForm();
+		} else if (formId == nm.newExamCenter.getId()) {
+			openExamCenterForm();
+		} else if (formId == nm.newSchool.getId()) {
+			openSchoolForm();
+		} else if (formId == nm.assingExamCenter.getId()) {
+			openExamCenterAssignmentForm();
+		} else if (formId == nm.woredaAllowance.getId()) {
+			openWoredaAllowanceForm();
 		}
+
 	}
 }

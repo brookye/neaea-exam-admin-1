@@ -38,8 +38,12 @@ public class WoredaForm extends CustomComponent {
 		BTAddWoreda.addClickListener(wfc);
 		CBRegion = new ComboBox("Region");
 		CBRegion.addValueChangeListener(wfc);
+		CBRegion.setNullSelectionAllowed(false);
+		CBRegion.setNewItemsAllowed(false);
 		CBZone = new ComboBox("Zone");
 		CBZone.setImmediate(true);
+		CBZone.setNullSelectionAllowed(false);
+		CBZone.setNewItemsAllowed(false);
 		CBZone.setWidth(160, Unit.POINTS);
 		CBRegion.setWidth(160, Unit.POINTS);
 		TFWoreda.setWidth(160, Unit.POINTS);
