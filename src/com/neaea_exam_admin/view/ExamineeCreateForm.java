@@ -132,7 +132,7 @@ public class ExamineeCreateForm extends CustomComponent {
 		gfName = new TextField("Grandfather's name");
 		gfName.setWidth(160, Unit.POINTS);
 		schoolCode = new TextField("School Code");
-		schoolCode.setValue("083432");
+		schoolCode.setValue("01");
 		schoolCode.setEnabled(false);
 		schoolCode.setWidth(160, Unit.POINTS);
 		age = new TextField("Age");

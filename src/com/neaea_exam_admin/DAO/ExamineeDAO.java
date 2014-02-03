@@ -35,7 +35,7 @@ public class ExamineeDAO {
 			pst.setString(5, examinee.getSight());
 			pst.setString(6, examinee.getSex());
 			pst.setInt(7, examinee.getAge());
-			//pst.setInt(8, examinee.getSchoolCode().getSchoolCodeId());
+			pst.setString(8, examinee.getSchool().getCode());
 			pst.setString(9, examinee.getGrandFatherName());
 			pst.setString(10, examinee.getFatherName());
 			pst.setString(11, examinee.getName());
@@ -91,10 +91,10 @@ public class ExamineeDAO {
 		try {
 			while (rs.next()) {
 				School school = new SchoolDAO(connManager)
-						.getBySchoolCodeId(rs.getInt("schoolCodeId")).get(0);
+						.getBySchoolCodeId(rs.getString("schoolCodeId")).get(0);
 				CategoryDAO categoryDAO = new CategoryDAO(connManager);
 
-				/*Examinee examinee = new Examinee(rs.getString("name"),
+				Examinee examinee = new Examinee(rs.getString("name"),
 						rs.getString("fatherName"),
 						rs.getString("grandFatherName"), school,
 						rs.getInt("age"), rs.getString("sex"),
@@ -104,7 +104,7 @@ public class ExamineeDAO {
 										(int) rs.getBlob("photo").length()),
 						rs.getString("registrationConfirmationNo"),
 						rs.getInt("examineeId"));
-				examinees.add(examinee);*/
+				examinees.add(examinee);
 			}
 
 			return examinees;

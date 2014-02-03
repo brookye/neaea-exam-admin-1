@@ -45,7 +45,7 @@ public class SchoolDAO {
 		return getSchool(getByCodeQuery);
 
 	}
-
+    
 	public List<School> getByWoredaId(int woredaId) {
 		String getByCodeQuery = "SELECT * FROM school WHERE woreda_id="
 				+ woredaId;
@@ -58,8 +58,8 @@ public class SchoolDAO {
 		return getSchool(query);
 	}
 
-	public List<School> getBySchoolCodeId(int code) {
-		String getByCodeQuery = "SELECT * FROM school WHERE code=" + code;
+	public List<School> getBySchoolCodeId(String code) {
+		String getByCodeQuery = "SELECT * FROM school WHERE code='" + code+"'";
 		return getSchool(getByCodeQuery);
 	}
 
@@ -75,6 +75,7 @@ public class SchoolDAO {
 				ExamCenter examCenter;
 				rs.getInt("groupNo");
 				if (!rs.wasNull()) {
+					
 					examCenter = examCenterDAO.getByGroupNo(
 							rs.getInt("groupNo")).get(0);
 				} else {

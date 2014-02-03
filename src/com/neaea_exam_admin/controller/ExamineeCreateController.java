@@ -108,6 +108,7 @@ public class ExamineeCreateController implements ClickListener,
 							(Integer) ecf.category.getValue()).get(0),
 					studPhotoBytes, regNo, 0);
 			examineeDAO.persist(examinee);
+			System.out.println("INFO:Examinee created successfully");
 			// persist ExamExamine
 			List<Exam> exams = new ArrayList<Exam>(); // all exam to be taken by
 			// the examinee
@@ -116,8 +117,10 @@ public class ExamineeCreateController implements ClickListener,
 					exams.add(examDAO.getExamById(i).get(0));
 				}
 			}
+			String DEBUG_STRING = "INFO:EXAMINEE regNo:" + regNo;
+			System.out.println(DEBUG_STRING);
 			examinee = examineeDAO.getByRegConfNo(regNo).get(0);
-			String DEBUG_STRING = "EXAMINEE:" + examinee.getName() + "-"
+			DEBUG_STRING = "EXAMINEE:" + examinee.getName() + "-"
 					+ examinee.getExamineeId() + "\nEXAMS:";
 			for (Exam exam : exams) {
 				ExamExaminee examExaminee = new ExamExaminee(examinee, exam, 0);
