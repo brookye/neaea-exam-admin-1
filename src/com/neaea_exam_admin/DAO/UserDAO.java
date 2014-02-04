@@ -14,7 +14,8 @@ public class UserDAO {
 		String query = "INSERT INTO user VALUES('" + user.getUserName() + "','"
 				+ user.getFirstName() + "','" + user.getLastName() + "','"
 				+ user.getEmail() + "','" + user.getTelephone() + "','"
-				+ user.getPassword() + "',"+user.getRole().getRoleId()+")";
+				+ user.getPassword() + "'," + user.getRole().getRoleId() + ",'"
+				+ user.getSchoolCode() + "')";
 		connManager.executeCUD(query);
 	}
 
@@ -23,4 +24,19 @@ public class UserDAO {
 				+ "' WHERE user_name='" + user.getUserName() + "'";
 		connManager.executeCUD(query);
 	}
+
+	public void updateSchoolCode(User user) {
+		String query = "UPDATE user SET password='" + user.getPassword()
+				+ "' WHERE user_name='" + user.getUserName() + "'";
+		connManager.executeCUD(query);
+	}
+	/*
+	 * public List<User> getByUname(String uname){ String
+	 * query="SELECT * FROM user where user_name='" + uname+"'"; return
+	 * getUsers(query); } public List<User> getUsers(String query){ List<User>
+	 * users=new ArrayList<User>(); ResultSet rs=
+	 * connManager.executeRead(query);
+	 * 
+	 * }
+	 */
 }

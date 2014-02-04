@@ -6,11 +6,13 @@ import com.neaea_exam_admin.DAO.UserDAO;
 import com.neaea_exam_admin.entity.Role;
 import com.neaea_exam_admin.entity.User;
 import com.neaea_exam_admin.utilities.ConnManager;
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 
 @SuppressWarnings("serial")
-public class UserFormController implements ClickListener {
+public class UserFormController implements ClickListener, ValueChangeListener {
 	private UserForm uf;
 	private ConnManager connManager;
 	private UserDAO userDAO;
@@ -26,11 +28,35 @@ public class UserFormController implements ClickListener {
 	@Override
 	public void buttonClick(ClickEvent event) {
 		Role role = roleDAO.getById((Integer) uf.CBUserType.getValue()).get(0);
-		User user = new User(role, uf.PFPassword.getValue(),
-				uf.TFTelephone.getValue(), uf.TFEmail.getValue(),
-				uf.TFFName.getValue(), uf.TFLName.getValue(),
-				uf.TFUName.getValue());
+		User user = null;
+		if (role.getRoleName().equals("SCHOOL_MASTER")) {
+			user = new User(role, uf.PFPassword.getValue(),
+					uf.TFTelephone.getValue(), uf.TFEmail.getValue(),
+					uf.TFFName.getValue(), uf.TFLName.getValue(),
+					uf.TFUName.getValue(), uf.CBSchoolName.getValue()
+							.toString());
+		} else {
+			user = new User(role, uf.PFPassword.getValue(),
+					uf.TFTelephone.getValue(), uf.TFEmail.getValue(),
+					uf.TFFName.getValue(), uf.TFLName.getValue(),
+					uf.TFUName.getValue(), "NULL");
+		}
 		userDAO.persist(user);
+
+	}
+
+	
+
+	@Override
+	public void valueChange(ValueChangeEvent event) {
+		System.out.println("INFO:ValueChangeListe");
+		Role role = roleDAO.getById((Integer) uf.CBUserType.getValue()).get(0);
+		boolean schoolMasterIsSelected = false;
+		if (role.getRoleName().equals("SCHOOL_MASTER")) {
+			uf.resetFormLayout(!schoolMasterIsSelected);
+		} else {
+			uf.resetFormLayout(schoolMasterIsSelected);
+		}
 
 	}
 }

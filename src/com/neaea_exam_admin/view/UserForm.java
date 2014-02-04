@@ -2,13 +2,25 @@ package com.neaea_exam_admin.view;
 
 import java.util.List;
 
+import com.neaea_exam_admin.DAO.RegionDAO;
 import com.neaea_exam_admin.DAO.RoleDAO;
+import com.neaea_exam_admin.DAO.SchoolDAO;
 import com.neaea_exam_admin.DAO.UserDAO;
+import com.neaea_exam_admin.DAO.WoredaDAO;
+import com.neaea_exam_admin.DAO.ZoneDAO;
 import com.neaea_exam_admin.controller.UserFormController;
+import com.neaea_exam_admin.entity.Region;
 import com.neaea_exam_admin.entity.Role;
+import com.neaea_exam_admin.entity.School;
+import com.neaea_exam_admin.entity.Woreda;
+import com.neaea_exam_admin.entity.Zone;
 import com.neaea_exam_admin.utilities.ConnManager;
 import com.sun.javafx.print.Units;
+import com.vaadin.data.Property;
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.server.Sizeable;
+import com.vaadin.ui.AbstractSelect;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.CustomComponent;
@@ -29,6 +41,10 @@ public class UserForm extends CustomComponent {
 	public Button BTAddUser;
 	public FormLayout fl;
 	public UserFormController ufc = new UserFormController(this);
+	public ComboBox CBZone;
+	public ComboBox CBRegion;
+	public ComboBox CBWoreda;
+	public ComboBox CBSchoolName;
 
 	public UserForm() {
 		init();
@@ -38,9 +54,54 @@ public class UserForm extends CustomComponent {
 	private void init() {
 		fl = new FormLayout();
 		CBUserType = new ComboBox("User type");
+		CBUserType.setImmediate(true);
+		CBUserType.addValueChangeListener(ufc);
 		CBUserType.setNewItemsAllowed(false);
 		CBUserType.setNullSelectionAllowed(false);
 		CBUserType.setWidth(160, Sizeable.Unit.POINTS);
+		CBRegion = new ComboBox("Region");
+		CBRegion.setNewItemsAllowed(false);
+		CBRegion.setNullSelectionAllowed(false);
+		CBRegion.setWidth(160, Sizeable.Unit.POINTS);
+		CBZone = new ComboBox("Zone");
+		CBWoreda = new ComboBox("Woreda");
+		CBSchoolName = new ComboBox("School");
+		CBRegion.addValueChangeListener(new ValueChangeListener() {
+
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				fillZone();
+
+			}
+		});
+		CBZone.addValueChangeListener(new ValueChangeListener() {
+
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				fillWoreda();
+
+			}
+		});
+		CBWoreda.addValueChangeListener(new ValueChangeListener() {
+
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				fillSchool();
+
+			}
+		});
+
+		CBZone.setNewItemsAllowed(false);
+		CBZone.setNullSelectionAllowed(false);
+		CBZone.setWidth(160, Sizeable.Unit.POINTS);
+
+		CBWoreda.setNewItemsAllowed(false);
+		CBWoreda.setNullSelectionAllowed(false);
+		CBWoreda.setWidth(160, Sizeable.Unit.POINTS);
+
+		CBSchoolName.setNewItemsAllowed(false);
+		CBSchoolName.setNullSelectionAllowed(false);
+		CBSchoolName.setWidth(160, Sizeable.Unit.POINTS);
 		fillUserType();
 		TFEmail = new TextField("Email");
 		TFEmail.setWidth(160, Sizeable.Unit.POINTS);
@@ -58,7 +119,20 @@ public class UserForm extends CustomComponent {
 		TFTelephone.setWidth(160, Sizeable.Unit.POINTS);
 		BTAddUser = new Button("Add");
 		BTAddUser.addClickListener(ufc);
+		fl.setImmediate(true);
+		resetFormLayout(false);
+	}
+
+	public void resetFormLayout(boolean schoolMasterIsSelected) {
+		fl.removeAllComponents();
 		fl.addComponent(CBUserType);
+		if (schoolMasterIsSelected) {
+			fl.addComponent(CBRegion);
+			fl.addComponent(CBZone);
+			fl.addComponent(CBWoreda);
+			fl.addComponent(CBSchoolName);
+			fillRegion();
+		}
 		fl.addComponent(TFFName);
 		fl.addComponent(TFLName);
 		fl.addComponent(TFEmail);
@@ -68,12 +142,60 @@ public class UserForm extends CustomComponent {
 		fl.addComponent(PFConfirmPassword);
 		fl.addComponent(BTAddUser);
 	}
-	public void fillUserType(){
-		RoleDAO roleDAO=new RoleDAO(new ConnManager());
-		List<Role> roles=roleDAO.getAll();
-		for (Role r:roles){
+
+	public void fillUserType() {
+		RoleDAO roleDAO = new RoleDAO(new ConnManager());
+		List<Role> roles = roleDAO.getAll();
+		for (Role r : roles) {
 			CBUserType.addItem(r.getRoleId());
 			CBUserType.setItemCaption(r.getRoleId(), r.getRoleName());
 		}
 	}
+
+	public void fillRegion() {
+		RegionDAO regionDAO = new RegionDAO(new ConnManager());
+		List<Region> regions = regionDAO.getAll();
+		for (Region reg : regions) {
+			CBRegion.addItem(reg.getRegionCode());
+			CBRegion.setItemCaption(reg.getRegionCode(), reg.getRegionName());
+		}
+	}
+
+	public void fillZone() {
+		CBZone.removeAllItems();
+		ZoneDAO zoneDAO = new ZoneDAO(new ConnManager());
+		System.out.println("INFO:CBRegion value:"
+				+ (Integer) CBRegion.getValue());
+		List<Zone> zones = zoneDAO.getByRegionId((Integer) CBRegion.getValue());
+		for (Zone zn : zones) {
+			CBZone.addItem(zn.getZoneId());
+			CBZone.setItemCaption(zn.getZoneId(), zn.getZoneName());
+		}
+	}
+
+	public void fillWoreda() {
+		CBWoreda.removeAllItems();
+		WoredaDAO woredaDAO = new WoredaDAO(new ConnManager());
+		System.out.println("INFO" + (Integer) CBZone.getValue());
+		List<Woreda> woredas = woredaDAO.getByZoneId((Integer) CBZone
+				.getValue());
+		for (Woreda w : woredas) {
+
+			CBWoreda.addItem(w.getWoredaId());
+			CBWoreda.setItemCaption(w.getWoredaId(), w.getWoredaName());
+		}
+	}
+
+	public void fillSchool() {
+		CBSchoolName.removeAllItems();
+		SchoolDAO schoolDAO = new SchoolDAO(new ConnManager());
+		List<School> schools = schoolDAO.getByWoredaId((Integer) CBWoreda
+				.getValue());
+		for (School s : schools) {
+
+			CBSchoolName.addItem(s.getCode());
+			CBSchoolName.setItemCaption(s.getCode(), s.getSchoolName());
+		}
+	}
+
 }

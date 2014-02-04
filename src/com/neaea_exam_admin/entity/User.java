@@ -8,9 +8,10 @@ public class User {
 	private String firstName;
 	private String lastName;
 	private String userName;
+	private String schoolCode;
 
 	public User(Role role, String password, String telephone, String email,
-			String firstName, String lastName, String userName) {
+			String firstName, String lastName, String userName, String schooCode) {
 		super();
 		this.role = role;
 		this.password = password;
@@ -19,6 +20,7 @@ public class User {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.userName = userName;
+		this.schoolCode = schooCode;
 	}
 
 	public Role getRole() {
@@ -27,6 +29,10 @@ public class User {
 
 	public void setRole(Role role) {
 		this.role = role;
+	}
+
+	public void setSchoolCode(String schoolCode) {
+		this.schoolCode = schoolCode;
 	}
 
 	public String getPassword() {
@@ -75,6 +81,10 @@ public class User {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public String getSchoolCode() {
+		return schoolCode;
 	}
 
 }
