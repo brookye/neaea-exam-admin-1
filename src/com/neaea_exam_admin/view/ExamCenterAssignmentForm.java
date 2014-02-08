@@ -8,7 +8,6 @@ import com.neaea_exam_admin.DAO.SchoolDAO;
 import com.neaea_exam_admin.DAO.WoredaDAO;
 import com.neaea_exam_admin.DAO.ZoneDAO;
 import com.neaea_exam_admin.controller.ExamCenterAssignmentFormController;
-import com.neaea_exam_admin.controller.ExamCenterController;
 import com.neaea_exam_admin.entity.ExamCenter;
 import com.neaea_exam_admin.entity.Region;
 import com.neaea_exam_admin.entity.School;
@@ -17,13 +16,14 @@ import com.neaea_exam_admin.entity.Zone;
 import com.neaea_exam_admin.utilities.ConnManager;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.server.Sizeable.Unit;
+import com.vaadin.data.Validator.InvalidValueException;
+import com.vaadin.data.validator.NullValidator;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.FormLayout;
-import com.vaadin.ui.TextField;
 
+@SuppressWarnings("serial")
 public class ExamCenterAssignmentForm extends CustomComponent {
 	public ComboBox CBWoreda;
 	public ComboBox CBZone;
@@ -44,7 +44,7 @@ public class ExamCenterAssignmentForm extends CustomComponent {
 		fillRegion();
 	}
 
-	@SuppressWarnings("serial")
+	
 	private void init() {
 		CBWoreda = new ComboBox("Woreda");
 		CBWoreda.setNullSelectionAllowed(false);
@@ -66,7 +66,7 @@ public class ExamCenterAssignmentForm extends CustomComponent {
 			@Override
 			public void valueChange(ValueChangeEvent event) {
 				fillWoreda();
-
+				
 			}
 		});
 		CBZone.setWidth(160, Unit.POINTS);
@@ -81,9 +81,10 @@ public class ExamCenterAssignmentForm extends CustomComponent {
 		});
 		CBRegion.addValueChangeListener(ecafc);
 		CBRegion.setWidth(160, Unit.POINTS);
+		
 		CBRegion.setNullSelectionAllowed(false);
 		CBRegion.setNewItemsAllowed(false);
-		CBSchoolName = new ComboBox("School name");
+		CBSchoolName = new ComboBox("School name");		
 		CBSchoolName.addValueChangeListener(new ValueChangeListener() {
 
 			@Override
@@ -109,8 +110,14 @@ public class ExamCenterAssignmentForm extends CustomComponent {
 		fl.addComponent(CBSchoolName);
 		fl.addComponent(CBExamCenter);		
 		fl.addComponent(BTAssign);
+		CBRegion.addValidator(new NullValidator("Cannot be empty", false));
+		CBZone.addValidator(new NullValidator("Cannot be empty", false));
+		CBWoreda.addValidator(new NullValidator("Cannot be empty", false));		
+		CBExamCenter.addValidator(new NullValidator("Cannot be empty", false));
+		CBSchoolName.addValidator(new NullValidator("Cannot be empty", false));
+		formValidatorLabelsOn(false);
 	}
-
+   
 	private void fillRegion() {
 		RegionDAO regionDAO = new RegionDAO(new ConnManager());
 		List<Region> regions = regionDAO.getAll();
@@ -155,10 +162,28 @@ public class ExamCenterAssignmentForm extends CustomComponent {
 			CBSchoolName.setItemCaption(s.getCode(), s.getSchoolName());
 		}
 	}
+public void formValidatorLabelsOn(boolean isOn) {
+		
+		CBRegion.setValidationVisible(isOn);
+		CBZone.setValidationVisible(isOn);
+		CBWoreda.setValidationVisible(isOn);
+		CBSchoolName.setValidationVisible(isOn);
+		CBExamCenter.setValidationVisible(isOn);
+
+	}
+
+	public void Validate() throws InvalidValueException {
+		
+		CBRegion.validate();
+		CBZone.validate();
+		CBWoreda.validate();
+		CBSchoolName.validate();
+		CBExamCenter.validate();
+
+	}
 	public void fillExamCenter() {
 		CBExamCenter.removeAllItems();
-		ExamCenterDAO examCenterDAO=new ExamCenterDAO(new ConnManager());
-		List<School> schools = schoolDAO.getByWoredaId((Integer)CBWoreda.getValue());
+		ExamCenterDAO examCenterDAO=new ExamCenterDAO(new ConnManager());		
 		List<ExamCenter> examCenters=examCenterDAO.getByWoreda((Integer)CBWoreda.getValue());
 		for (ExamCenter  e : examCenters) {
 

@@ -1,13 +1,15 @@
 package com.neaea_exam_admin.controller;
 
-import com.neaea_exam_admin.view.UserForm;
 import com.neaea_exam_admin.DAO.RoleDAO;
 import com.neaea_exam_admin.DAO.UserDAO;
 import com.neaea_exam_admin.entity.Role;
 import com.neaea_exam_admin.entity.User;
 import com.neaea_exam_admin.utilities.ConnManager;
+import com.neaea_exam_admin.view.UserForm;
+import com.vaadin.ui.Notification;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 
@@ -27,8 +29,15 @@ public class UserFormController implements ClickListener, ValueChangeListener {
 
 	@Override
 	public void buttonClick(ClickEvent event) {
+		try{
+	    uf.formValidatorsOn(false);
+	    uf.Validate();
 		Role role = roleDAO.getById((Integer) uf.CBUserType.getValue()).get(0);
 		User user = null;
+		if(!uf.PFPassword.getValue().equals(uf.PFConfirmPassword.getValue())){
+			Notification.show("Password don't much",Notification.TYPE_ERROR_MESSAGE);
+			return;
+		}
 		if (role.getRoleName().equals("SCHOOL_MASTER")) {
 			user = new User(role, uf.PFPassword.getValue(),
 					uf.TFTelephone.getValue(), uf.TFEmail.getValue(),
@@ -42,6 +51,12 @@ public class UserFormController implements ClickListener, ValueChangeListener {
 					uf.TFUName.getValue(), "NULL");
 		}
 		userDAO.persist(user);
+		}
+		catch(InvalidValueException e){
+			uf.formValidatorsOn(true);
+			Notification.show("Error in form",Notification.TYPE_ERROR_MESSAGE);
+			
+		}
 
 	}
 

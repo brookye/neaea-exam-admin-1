@@ -9,13 +9,13 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
-import com.vaadin.ui.TextArea;
 import com.vaadin.ui.VerticalLayout;
 
 /**
  *
  * @author Misgana Bayetta <misgana.bayetta@gmail.com>
  */
+@SuppressWarnings("serial")
 public class ExamCentersDetailWindow extends CustomComponent {
 
     Table examCenterDetailTbl = new Table();

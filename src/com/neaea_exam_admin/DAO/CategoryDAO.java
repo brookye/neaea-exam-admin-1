@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.neaea_exam_admin.entity.Category;
-import com.neaea_exam_admin.entity.Exam;
 import com.neaea_exam_admin.utilities.ConnManager;
 
 public class CategoryDAO {

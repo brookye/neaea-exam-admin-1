@@ -19,16 +19,14 @@ public class WoredAllowanceFormController implements ClickListener,
 	private WoredaAllowanceForm waf;
 	private ConnManager connManager;
 	private WoredaDAO woredaDAO;
-	private ZoneDAO zoneDAO;
-	private RegionDAO regionDAO;
 	private WoredaAllowanceDAO woredaAllowanceDAO;
 
 	public WoredAllowanceFormController(WoredaAllowanceForm _waf) {
 		waf = _waf;
 		connManager = new ConnManager();
 		woredaDAO = new WoredaDAO(connManager);
-		zoneDAO = new ZoneDAO(connManager);
-		regionDAO = new RegionDAO(connManager);
+		new ZoneDAO(connManager);
+		new RegionDAO(connManager);
 		woredaAllowanceDAO = new WoredaAllowanceDAO(connManager);
 	}
 
@@ -39,6 +37,7 @@ public class WoredAllowanceFormController implements ClickListener,
 
 	@Override
 	public void buttonClick(ClickEvent event) {
+		
 		Woreda woreda = woredaDAO.getById(
 				(Integer) waf.CBWoredaAllowanceWoreda.getValue()).get(0);
 		WoredaAllowance woredaAllowance = new WoredaAllowance(

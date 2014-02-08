@@ -8,6 +8,10 @@ import com.neaea_exam_admin.controller.WoredaFormController;
 import com.neaea_exam_admin.entity.Region;
 import com.neaea_exam_admin.entity.Zone;
 import com.neaea_exam_admin.utilities.ConnManager;
+import com.vaadin.data.Validator.InvalidValueException;
+import com.vaadin.data.validator.NullValidator;
+import com.vaadin.data.validator.RegexpValidator;
+import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.CustomComponent;
@@ -54,6 +58,18 @@ public class WoredaForm extends CustomComponent {
 		fl.addComponent(TFWoreda);
 		fl.addComponent(TFWoredaCode);
 		fl.addComponent(BTAddWoreda);
+		setFormValidator(false);
+		CBRegion.addValidator(new com.vaadin.data.validator.NullValidator(
+				"Can't be empty", false));
+		CBZone.addValidator(new com.vaadin.data.validator.NullValidator(
+				"Can't be empty", false));
+		TFWoreda.addValidator(new NullValidator("Can't be empty", false));
+		TFWoreda.addValidator(new RegexpValidator("[a-zA-Z]+",true,"only alphabets"));
+		TFWoreda.addValidator(new StringLengthValidator("not a name", 2, 30, false));
+		TFWoredaCode.addValidator(new NullValidator("Can't be empty", false));
+		TFWoredaCode.addValidator(new StringLengthValidator("length of woreda code is not right", 1, 2, false));
+		TFWoredaCode.addValidator(new RegexpValidator("[0-9]+",true,"only numbers"));
+	
 	}
 
 	private void fillRegion() {
@@ -63,6 +79,18 @@ public class WoredaForm extends CustomComponent {
 			CBRegion.addItem(reg.getRegionCode());
 			CBRegion.setItemCaption(reg.getRegionCode(), reg.getRegionName());
 		}
+	}
+	public void validate() throws InvalidValueException{
+		CBRegion.validate();
+		CBZone.validate();
+		TFWoreda.validate();
+		TFWoredaCode.validate();
+	}
+	public void setFormValidator(boolean isOn){
+		CBRegion.setValidationVisible(isOn);
+		CBZone.setValidationVisible(isOn);
+		TFWoreda.setValidationVisible(isOn);
+		TFWoredaCode.setValidationVisible(isOn);
 	}
 	public void fillZone() {
 		CBZone.removeAllItems();

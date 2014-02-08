@@ -9,6 +9,7 @@ import com.neaea_exam_admin.entity.ExamCenter;
 import com.neaea_exam_admin.entity.School;
 import com.neaea_exam_admin.utilities.ConnManager;
 import com.neaea_exam_admin.entity.Woreda;
+
 public class ExamCenterDAO {
 	private ConnManager connManager;
 
@@ -25,7 +26,7 @@ public class ExamCenterDAO {
 		System.out.println("INFO:" + query);
 		connManager.executeCUD(query);
 	}
-     
+
 	public List<ExamCenter> getByGroupNo(int groupNo) {
 		String query = "SELECT * FROM examcenter WHERE groupNo=" + groupNo;
 		return getExamCenter(query);
@@ -48,43 +49,49 @@ public class ExamCenterDAO {
 
 		return filteredExamCenter;
 	}
-	//this method was created to avoid the stackoverflow exception due to cycling calls
-	//between SchoolDAO.getByCode() and getExamCenter.Since ExamCenter exists after school
-	//according to the business rule,we can use this explicit knowledge
-    private School getMySchool(String schoolCode){
-    	String query="SELECT * FROM school WHERE code='"+schoolCode+"'";
-    	ResultSet rs=connManager.executeRead(query);
-    	WoredaDAO woredaDAO=new WoredaDAO(connManager); 
-    	School school=null;
-    	try {
-			while(rs.next()){
-				Woreda woreda=woredaDAO.getById(rs.getInt("woreda_id")).get(0);
-				school=new School(rs.getString("code"),null,rs.getString("school_name"),woreda);
+
+	// this method was created to avoid the stackoverflow exception due to
+	// cycling calls
+	// between SchoolDAO.getByCode() and getExamCenter.Since ExamCenter exists
+	// after school
+	// according to the business rule,we can use this explicit knowledge
+	private School getMySchool(String schoolCode) {
+		String query = "SELECT * FROM school WHERE code='" + schoolCode + "'";
+		ResultSet rs = connManager.executeRead(query);
+		WoredaDAO woredaDAO = new WoredaDAO(connManager);
+		School school = null;
+		try {
+			while (rs.next()) {
+				Woreda woreda = woredaDAO.getById(rs.getInt("woreda_id"))
+						.get(0);
+				school = new School(rs.getString("code"), null,
+						rs.getString("school_name"), woreda);
 			}
 			return school;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	return null;
-    }
+		return null;
+	}
+
 	private List<ExamCenter> getExamCenter(String query) {
-		SchoolDAO schoolDAO = new SchoolDAO(connManager);
 		List<ExamCenter> examCenters = new ArrayList<ExamCenter>();
 		ResultSet rs = connManager.executeRead(query);
 		try {
 			while (rs.next()) {
-			//This was where the problem was let to start	
-			//	School school = schoolDAO
-			//			.getByCode(rs.getString("school_code")).get(0);
-		    School school=getMySchool(rs.getString("school_code"));		
+				// This was where the problem was let to start
+				// School school = schoolDAO
+				// .getByCode(rs.getString("school_code")).get(0);
+				School school = getMySchool(rs.getString("school_code"));
 				ExamCenter examCenter = new ExamCenter(school,
 						rs.getInt("groupNo"), rs.getFloat("distance"),
 						rs.getInt("no_of_classroom"));
-				//this is where the last magic of the fix happens for the remedy of 
-				//the infinite in b/n recursive calling
+				// this is where the last magic of the fix happens as the
+				// remedy of
+				// the infinite in b/n recursive calling
 				examCenter.getSchool().setExamCenter(examCenter);
-				//just as always now
+				// just as always now
 				examCenters.add(examCenter);
 			}
 			return examCenters;
