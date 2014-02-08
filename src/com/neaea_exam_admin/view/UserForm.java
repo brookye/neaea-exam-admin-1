@@ -69,7 +69,9 @@ public class UserForm extends CustomComponent {
 		CBZone = new ComboBox("Zone");
 		CBZone.addValidator(new NullValidator("Empty selection", false));
 		CBWoreda = new ComboBox("Woreda");
+
 		CBWoreda.addValidator(new NullValidator("Empty selection", false));
+
 		CBSchoolName = new ComboBox("School");
 		CBRegion.addValueChangeListener(new ValueChangeListener() {
 
@@ -110,42 +112,64 @@ public class UserForm extends CustomComponent {
 		fillUserType();
 		TFEmail = new TextField("Email");
 		TFEmail.addValidator(new EmailValidator("Invalid email"));
-		
-		TFEmail.addValidator(new StringLengthValidator("Not a valid email",3,40,false));
+
+		TFEmail.addValidator(new StringLengthValidator("Not a valid email", 3,
+				40, false));
 		TFEmail.setWidth(160, Sizeable.Unit.POINTS);
 		TFFName = new TextField("First name");
-		TFFName.addValidator(new StringLengthValidator("Not a valid name",2,40,false));
-		
+		TFFName.addValidator(new StringLengthValidator("Not a valid name", 2,
+				40, false));
+
 		TFFName.addValidator(new RegexpValidator("[a-zA-z]+", true,
-				"Only alphabet is allowed"));
+				"only alphabet"));
+
 		TFFName.setWidth(160, Sizeable.Unit.POINTS);
 		TFLName = new TextField("Last name");
-		
-		TFFName.addValidator(new StringLengthValidator("Not a valid name",2,40,false));
+
+		TFFName.addValidator(new StringLengthValidator("Not a valid name", 2,
+				40, false));
 		TFLName.addValidator(new RegexpValidator("[a-zA-z]+", true,
 				"Only alphabet is allowed"));
 		TFLName.setWidth(160, Sizeable.Unit.POINTS);
 		TFUName = new TextField("User name");
-		TFUName.addValidator(new StringLengthValidator("Not a valid user name atlease five alphabetic charactes",5,40,false));
-		
+
+		TFUName.addValidator(new StringLengthValidator(
+				"Not a valid user name atlease five alphabetic charactes", 5,
+				40, false));
+
 		TFUName.addValidator(new RegexpValidator("[a-zA-z]+", true,
 				"Only alphabet is allowed"));
 		TFUName.setWidth(160, Sizeable.Unit.POINTS);
 		PFPassword = new PasswordField("Password");
-		PFPassword.addValidator(new StringLengthValidator("Incorrect password format atleast string sould be between 8 and 15",8,15,false));
-		PFPassword.addValidator(new RegexpValidator("^[a-zA-Z0-9]+",false,"password should consist special characters,numbers and letters.No other character is allowed."));
+		PFPassword
+				.addValidator(new StringLengthValidator(
+						"Incorrect password format atleast string sould be between 8 and 15",
+						8, 15, false));
+		PFPassword
+				.addValidator(new RegexpValidator(
+						"^[a-zA-Z0-9]+",
+						false,
+						"password should consist special characters,numbers and letters.No other character is allowed."));
 		PFPassword.setWidth(160, Sizeable.Unit.POINTS);
 		PFConfirmPassword = new PasswordField("Confirm password");
-		PFConfirmPassword.addValidator(new RegexpValidator("^[a-zA-Z0-9]+",false,"password should consist special characters,numbers and letters.No other character is allowed."));
-		PFConfirmPassword.addValidator(new StringLengthValidator("Incorrect password format atleast string should be between 8 and 15",8,15,false));
-		
+		PFConfirmPassword
+				.addValidator(new RegexpValidator(
+						"^[a-zA-Z0-9]+",
+						false,
+						"password should consist special characters,numbers and letters.No other character is allowed."));
+		PFConfirmPassword
+				.addValidator(new StringLengthValidator(
+						"Incorrect password format atleast string should be between 8 and 15",
+						8, 15, false));
+
 		PFConfirmPassword.setWidth(160, Sizeable.Unit.POINTS);
 		TFTelephone = new TextField("Telephone");
 		TFTelephone.setWidth(160, Sizeable.Unit.POINTS);
 		TFTelephone
 				.addValidator(new NullValidator("null is not allowed", false));
 		TFTelephone.addValidator(new RegexpValidator("[0-9]+", true,
-				"Only number is allowed"));
+				"invalid telephone"));
+
 		TFTelephone.addValidator(new StringLengthValidator(
 				"Invalid phone number", 10, 10, true));
 		BTAddUser = new Button("Add");
@@ -153,6 +177,7 @@ public class UserForm extends CustomComponent {
 		fl.setImmediate(true);
 		resetFormLayout(false);
 		formValidatorsOn(false);
+
 	}
 
 	public void formValidatorsOn(boolean isOn) {
@@ -164,11 +189,11 @@ public class UserForm extends CustomComponent {
 		PFConfirmPassword.setValidationVisible(isOn);
 		TFUName.setValidationVisible(isOn);
 		TFTelephone.setValidationVisible(isOn);
-		if(fl.getComponentCount()>8){
-		CBZone.setValidationVisible(isOn);
-		CBRegion.setValidationVisible(isOn);
-		CBWoreda.setValidationVisible(isOn);
-		CBSchoolName.setValidationVisible(isOn);
+		if (fl.getComponentCount() > 8) {
+			CBZone.setValidationVisible(isOn);
+			CBRegion.setValidationVisible(isOn);
+			CBWoreda.setValidationVisible(isOn);
+			CBSchoolName.setValidationVisible(isOn);
 		}
 	}
 
@@ -181,12 +206,12 @@ public class UserForm extends CustomComponent {
 		PFConfirmPassword.validate();
 		TFUName.validate();
 		TFTelephone.validate();
-      if(fl.getComponentCount()>8){
-		CBZone.validate();
-		CBRegion.validate();
-		CBWoreda.validate();
-		CBSchoolName.validate();
-      }
+		if (fl.getComponentCount() > 8) {
+			CBZone.validate();
+			CBRegion.validate();
+			CBWoreda.validate();
+			CBSchoolName.validate();
+		}
 	}
 
 	public void resetFormLayout(boolean schoolMasterIsSelected) {

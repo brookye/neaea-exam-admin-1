@@ -68,13 +68,21 @@ public class SchoolForm extends CustomComponent {
 		TFSchoolCode = new TextField("School Code");
 		TFSchoolCode.addValidator(new NullValidator("Null is not allowed",
 				false));
+<<<<<<< HEAD
 		TFSchoolCode.addValidator(new RegexpValidator("[0-9]+",
+=======
+		TFSchoolCode.addValidator(new RegexpValidator("0-9",
+>>>>>>> 802585f8dc16a331acb25b38f7bf6efabef3f729
 				"Only number is allowed"));
 		TFSchoolCode.setWidth(160, Unit.POINTS);
 		TFSchoolName = new TextField("School Name");
 		TFSchoolName.addValidator(new StringLengthValidator(
 				"Invalid shcool name", 3, 15, false));
+<<<<<<< HEAD
 		TFSchoolName.addValidator(new RegexpValidator("[a-zA-Z]+", true,
+=======
+		TFSchoolName.addValidator(new RegexpValidator("a-zA-Z", true,
+>>>>>>> 802585f8dc16a331acb25b38f7bf6efabef3f729
 				"only alphabet is allowed"));
 		TFSchoolName.addValidator(new NullValidator("Null is not allowed",
 				false));

@@ -7,8 +7,11 @@ import com.neaea_exam_admin.controller.ZoneController;
 import com.neaea_exam_admin.entity.Region;
 import com.neaea_exam_admin.utilities.ConnManager;
 import com.vaadin.data.Validator.InvalidValueException;
+<<<<<<< HEAD
 import com.vaadin.data.validator.RegexpValidator;
 import com.vaadin.data.validator.StringLengthValidator;
+=======
+>>>>>>> 802585f8dc16a331acb25b38f7bf6efabef3f729
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.CustomComponent;
@@ -34,10 +37,16 @@ public class ZoneForm extends CustomComponent {
 	private void init() {
 		
 		TFZone = new TextField("Name");
+		TFZone.addValidator(new com.vaadin.data.validator.NullValidator(
+				"Can't be empty", false));
 		TFZoneCode = new TextField("Zone code");
+		TFZoneCode.addValidator(new com.vaadin.data.validator.NullValidator(
+				"Can't be empty", false));
 		BTAddZone = new Button("Add");
 		BTAddZone.addClickListener(zc);
 		CBRegion = new ComboBox("Region");
+		CBRegion.addValidator(new com.vaadin.data.validator.NullValidator(
+				"Can't be empty", false));
 		CBRegion.setWidth(160, Unit.POINTS);
 		CBRegion.setNullSelectionAllowed(false);
 		CBRegion.setNewItemsAllowed(false);
@@ -60,6 +69,17 @@ public class ZoneForm extends CustomComponent {
 		CBRegion.addValidator(new com.vaadin.data.validator.NullValidator(
 				"Can't be empty", false));
 		
+	}
+	public void validate() throws InvalidValueException{
+		TFZone.validate();
+		TFZoneCode.validate();
+		CBRegion.validate();
+	}
+	public void setFormValidator(boolean isOn){
+		TFZone.setValidationVisible(isOn);
+		TFZoneCode.setValidationVisible(isOn);
+		CBRegion.setValidationVisible(isOn);
+
 	}
 	public void validate() throws InvalidValueException{
 		TFZone.validate();
