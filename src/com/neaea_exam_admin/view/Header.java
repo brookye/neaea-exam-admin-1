@@ -15,6 +15,7 @@ import com.vaadin.ui.Label;
  *
  * @author Misgana Bayetta <misgana.bayetta@gmail.com>
  */
+@SuppressWarnings({ "unused", "serial" })
 public class Header extends CustomComponent {
 
     public Header() {

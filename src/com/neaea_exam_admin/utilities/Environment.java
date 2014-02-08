@@ -6,7 +6,7 @@ import com.vaadin.server.VaadinService;
 
 public class Environment {
     public final static String BASE_DIR=VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
-
+    
 	public static String createDir(String dirName) {
 		// TODO Auto-generated method stub
 	    File f=new File(BASE_DIR+"/"+dirName);

@@ -1,25 +1,27 @@
 package com.neaea_exam_admin.view;
 
-import java.util.Spliterator;
-import java.util.function.Consumer;
+import java.util.HashMap;
 
 import javax.servlet.annotation.WebServlet;
 
-import com.neaea_exam_admin.view.LoginForm;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
-import com.vaadin.ui.Component;
+import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.MenuBar.MenuItem;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.MenuBar.Command;
+import com.vaadin.ui.Window;
+import com.vaadin.ui.Window.CloseEvent;
+import com.vaadin.ui.Window.CloseListener;
 
 ;
 @SuppressWarnings("serial")
 @Theme("neaea_exam_admin")
-public class MainForm extends UI implements Command {
+public class MainForm extends UI implements Command, CloseListener {
+	public static HashMap<String, String> userData = new HashMap<String, String>();
 	public NavigationMenu nm = new NavigationMenu();
 	public ExamineeCreateForm ecrf = new ExamineeCreateForm();
 	public WoredaAllowanceForm wa = new WoredaAllowanceForm();
@@ -27,10 +29,11 @@ public class MainForm extends UI implements Command {
 	public ZoneForm zf = new ZoneForm();
 	public SchoolForm sf = new SchoolForm();
 	public ExamCenterForm ecf = new ExamCenterForm();
-	public final VerticalLayout vlayout = new VerticalLayout();
+	public VerticalLayout vlayout = new VerticalLayout();
 	ExamCenterAssignmentForm ecaf = new ExamCenterAssignmentForm();
 	UserForm uf = new UserForm();
 	LoginForm lf = new LoginForm();
+	static Window loginWindow;
 
 	@WebServlet(value = "/*", asyncSupported = true)
 	@VaadinServletConfiguration(productionMode = false, ui = MainForm.class)
@@ -41,12 +44,30 @@ public class MainForm extends UI implements Command {
 	protected void init(VaadinRequest request) {
 
 		setContent(vlayout);
-		vlayout.addComponent(nm);
-		AssignMenuItemEventHandler(nm);
-		
+		showLogin();
+
 	}
-    public void AssignMenuItemEventHandler(NavigationMenu nm){
-    	nm.zone.setCommand(this);
+
+	// only to be called by the LoginFormController after authentication
+	public static void showMain() {
+		loginWindow.close();
+	}
+
+	public void showLogin() {
+		loginWindow = new Window();
+		loginWindow.addCloseListener(this);
+		loginWindow.setContent(lf);
+		loginWindow.setClosable(false);
+		loginWindow.center();
+		loginWindow.setWidth("30em");
+		loginWindow.setResizable(false);
+		loginWindow.setModal(true);
+		loginWindow.setCaption("NEAEA EXAM ADMINISTRATION");
+		addWindow(loginWindow);
+	}
+
+	public void AssignMenuItemEventHandler(NavigationMenu nm) {
+		nm.zone.setCommand(this);
 		nm.registerExaminee.setCommand(this);
 		nm.newUser.setCommand(this);
 		nm.woreda.setCommand(this);
@@ -54,7 +75,9 @@ public class MainForm extends UI implements Command {
 		nm.assingExamCenter.setCommand(this);
 		nm.woredaAllowance.setCommand(this);
 		nm.newExamCenter.setCommand(this);
-    }
+		nm.updateExamCenter.setCommand(this);
+	}
+
 	public void openZoneForm() {
 		vlayout.removeAllComponents();
 		vlayout.addComponent(nm);
@@ -76,6 +99,7 @@ public class MainForm extends UI implements Command {
 	public void openExamCenterForm() {
 		vlayout.removeAllComponents();
 		vlayout.addComponent(nm);
+		ecf.fillForm(); //just to refill with edit or add conditions
 		vlayout.addComponent(ecf);
 	}
 
@@ -104,18 +128,6 @@ public class MainForm extends UI implements Command {
 	}
 
 	@Override
-	public void forEach(Consumer<? super Component> action) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public Spliterator<Component> spliterator() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void menuSelected(MenuItem selectedItem) {
 		int formId = selectedItem.getId();
 		if (formId == nm.zone.getId()) {
@@ -127,8 +139,14 @@ public class MainForm extends UI implements Command {
 		} else if (formId == nm.woreda.getId()) {
 			openWoredaForm();
 		} else if (formId == nm.newExamCenter.getId()) {
+			ExamCenterForm.isEdit=false;			
 			openExamCenterForm();
-		} else if (formId == nm.newSchool.getId()) {
+		}
+		else if (formId == nm.updateExamCenter.getId()) {
+			ExamCenterForm.isEdit=true;
+			openExamCenterForm();
+		}
+		else if (formId == nm.newSchool.getId()) {
 			openSchoolForm();
 		} else if (formId == nm.assingExamCenter.getId()) {
 			openExamCenterAssignmentForm();
@@ -136,5 +154,14 @@ public class MainForm extends UI implements Command {
 			openWoredaAllowanceForm();
 		}
 
+	}
+
+	@Override
+	public void windowClose(CloseEvent e) {
+		vlayout.addComponent(nm);
+		AssignMenuItemEventHandler(nm);
+		// please welcome the hero
+		Notification.show("Welcome " + userData.get("USER") + "!",
+				userData.get("USER_TYPE")+ (userData.containsKey("SCHOOL_CODE")?userData.get("SCHOOL_CODE"):""), Notification.TYPE_HUMANIZED_MESSAGE);
 	}
 }

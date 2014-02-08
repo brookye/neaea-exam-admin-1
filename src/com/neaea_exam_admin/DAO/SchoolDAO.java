@@ -62,7 +62,10 @@ public class SchoolDAO {
 		String getByCodeQuery = "SELECT * FROM school WHERE code='" + code+"'";
 		return getSchool(getByCodeQuery);
 	}
-
+	 public List<School> getSchoolLike(String name){
+	    	String query="SELECT * FROM school WHERE school_name LIKE '"+name+"%'";
+	    	return getSchool(query);
+	    }
 	private List<School> getSchool(String getQuery) {
 		WoredaDAO woredaDAO = new WoredaDAO(connManager);
 		ExamCenterDAO examCenterDAO = new ExamCenterDAO(connManager);

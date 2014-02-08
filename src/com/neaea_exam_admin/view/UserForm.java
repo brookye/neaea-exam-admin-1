@@ -5,7 +5,6 @@ import java.util.List;
 import com.neaea_exam_admin.DAO.RegionDAO;
 import com.neaea_exam_admin.DAO.RoleDAO;
 import com.neaea_exam_admin.DAO.SchoolDAO;
-import com.neaea_exam_admin.DAO.UserDAO;
 import com.neaea_exam_admin.DAO.WoredaDAO;
 import com.neaea_exam_admin.DAO.ZoneDAO;
 import com.neaea_exam_admin.controller.UserFormController;
@@ -15,12 +14,14 @@ import com.neaea_exam_admin.entity.School;
 import com.neaea_exam_admin.entity.Woreda;
 import com.neaea_exam_admin.entity.Zone;
 import com.neaea_exam_admin.utilities.ConnManager;
-import com.sun.javafx.print.Units;
-import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.data.Validator.InvalidValueException;
+import com.vaadin.data.validator.EmailValidator;
+import com.vaadin.data.validator.NullValidator;
+import com.vaadin.data.validator.RegexpValidator;
+import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.server.Sizeable;
-import com.vaadin.ui.AbstractSelect;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.CustomComponent;
@@ -54,17 +55,21 @@ public class UserForm extends CustomComponent {
 	private void init() {
 		fl = new FormLayout();
 		CBUserType = new ComboBox("User type");
+		CBUserType.addValidator(new NullValidator("Empty selection",false));
 		CBUserType.setImmediate(true);
 		CBUserType.addValueChangeListener(ufc);
 		CBUserType.setNewItemsAllowed(false);
 		CBUserType.setNullSelectionAllowed(false);
 		CBUserType.setWidth(160, Sizeable.Unit.POINTS);
 		CBRegion = new ComboBox("Region");
+		CBRegion.addValidator(new NullValidator("Empty selection", false));
 		CBRegion.setNewItemsAllowed(false);
 		CBRegion.setNullSelectionAllowed(false);
 		CBRegion.setWidth(160, Sizeable.Unit.POINTS);
 		CBZone = new ComboBox("Zone");
+		CBZone.addValidator(new NullValidator("Empty selection", false));
 		CBWoreda = new ComboBox("Woreda");
+		CBWoreda.addValidator(new NullValidator("Empty selection",false));
 		CBSchoolName = new ComboBox("School");
 		CBRegion.addValueChangeListener(new ValueChangeListener() {
 
@@ -104,25 +109,72 @@ public class UserForm extends CustomComponent {
 		CBSchoolName.setWidth(160, Sizeable.Unit.POINTS);
 		fillUserType();
 		TFEmail = new TextField("Email");
+		TFEmail.addValidator(new EmailValidator("Invalid email"));
 		TFEmail.setWidth(160, Sizeable.Unit.POINTS);
 		TFFName = new TextField("First name");
+		TFFName.addValidator(new NullValidator("Name cannot value", true));
+		TFFName.addValidator(new RegexpValidator("a-zA-z", true,
+				"Only alphabet is allowed"));
 		TFFName.setWidth(160, Sizeable.Unit.POINTS);
 		TFLName = new TextField("Last name");
 		TFLName.setWidth(160, Sizeable.Unit.POINTS);
 		TFUName = new TextField("User name");
+		TFUName.addValidator(new NullValidator("cannot have null value", true));
+		TFUName.addValidator(new RegexpValidator("a-zA-z", true,
+				"Only alphabet is allowed"));
 		TFUName.setWidth(160, Sizeable.Unit.POINTS);
 		PFPassword = new PasswordField("Password");
+		PFPassword
+				.addValidator(new NullValidator("empty password is not allowed",true));
 		PFPassword.setWidth(160, Sizeable.Unit.POINTS);
 		PFConfirmPassword = new PasswordField("Confirm password");
+		PFConfirmPassword.addValidator(new NullValidator("empty password is not allowed",
+				true));
 		PFConfirmPassword.setWidth(160, Sizeable.Unit.POINTS);
 		TFTelephone = new TextField("Telephone");
 		TFTelephone.setWidth(160, Sizeable.Unit.POINTS);
+		TFTelephone
+				.addValidator(new NullValidator("null is not allowed", true));
+		TFTelephone.addValidator(new RegexpValidator("0-9", true,
+				"Only number is allowed"));
+		TFTelephone.addValidator(new StringLengthValidator(
+				"Invalid phone number", 10, 10, true));
 		BTAddUser = new Button("Add");
 		BTAddUser.addClickListener(ufc);
 		fl.setImmediate(true);
 		resetFormLayout(false);
+		formValidatorsOn(false);
 	}
 
+	public void formValidatorsOn(boolean isOn) {
+		CBUserType.setValidationVisible(isOn);
+		TFFName.setValidationVisible(isOn);
+		TFLName.setValidationVisible(isOn);
+		TFEmail.setValidationVisible(isOn);
+		PFPassword.setValidationVisible(isOn);
+		PFConfirmPassword.setValidationVisible(isOn);
+		TFUName.setValidationVisible(isOn);
+		TFTelephone.setValidationVisible(isOn);		
+		CBZone.setValidationVisible(isOn);
+		CBRegion.setValidationVisible(isOn);
+		CBWoreda.setValidationVisible(isOn);
+		CBSchoolName.setValidationVisible(isOn);
+	}
+	public void Validate() throws InvalidValueException {
+		CBUserType.validate();
+		TFFName.validate();
+		TFLName.validate();
+		TFEmail.validate();
+		PFPassword.validate();
+		PFConfirmPassword.validate();
+		TFUName.validate();
+		TFTelephone.validate();
+		
+		CBZone.validate();
+		CBRegion.validate();
+		CBWoreda.validate();
+		CBSchoolName.validate();
+	}
 	public void resetFormLayout(boolean schoolMasterIsSelected) {
 		fl.removeAllComponents();
 		fl.addComponent(CBUserType);

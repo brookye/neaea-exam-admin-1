@@ -8,7 +8,6 @@ import com.neaea_exam_admin.DAO.SchoolDAO;
 import com.neaea_exam_admin.DAO.WoredaDAO;
 import com.neaea_exam_admin.DAO.ZoneDAO;
 import com.neaea_exam_admin.controller.ExamCenterAssignmentFormController;
-import com.neaea_exam_admin.controller.ExamCenterController;
 import com.neaea_exam_admin.entity.ExamCenter;
 import com.neaea_exam_admin.entity.Region;
 import com.neaea_exam_admin.entity.School;
@@ -17,13 +16,12 @@ import com.neaea_exam_admin.entity.Zone;
 import com.neaea_exam_admin.utilities.ConnManager;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.FormLayout;
-import com.vaadin.ui.TextField;
 
+@SuppressWarnings("serial")
 public class ExamCenterAssignmentForm extends CustomComponent {
 	public ComboBox CBWoreda;
 	public ComboBox CBZone;
@@ -44,7 +42,7 @@ public class ExamCenterAssignmentForm extends CustomComponent {
 		fillRegion();
 	}
 
-	@SuppressWarnings("serial")
+	
 	private void init() {
 		CBWoreda = new ComboBox("Woreda");
 		CBWoreda.setNullSelectionAllowed(false);
@@ -157,8 +155,7 @@ public class ExamCenterAssignmentForm extends CustomComponent {
 	}
 	public void fillExamCenter() {
 		CBExamCenter.removeAllItems();
-		ExamCenterDAO examCenterDAO=new ExamCenterDAO(new ConnManager());
-		List<School> schools = schoolDAO.getByWoredaId((Integer)CBWoreda.getValue());
+		ExamCenterDAO examCenterDAO=new ExamCenterDAO(new ConnManager());		
 		List<ExamCenter> examCenters=examCenterDAO.getByWoreda((Integer)CBWoreda.getValue());
 		for (ExamCenter  e : examCenters) {
 

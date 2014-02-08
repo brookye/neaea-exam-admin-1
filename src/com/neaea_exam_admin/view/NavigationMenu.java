@@ -4,7 +4,6 @@
  */
 package com.neaea_exam_admin.view;
 
-import com.sun.glass.ui.Menu;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.MenuBar;
