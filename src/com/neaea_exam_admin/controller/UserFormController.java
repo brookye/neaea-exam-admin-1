@@ -39,6 +39,7 @@ public class UserFormController implements ClickListener, ValueChangeListener {
 			return;
 		}
 		if (role.getRoleName().equals("SCHOOL_MASTER")) {
+			uf.schoolRepFormPartValidate();
 			user = new User(role, uf.PFPassword.getValue(),
 					uf.TFTelephone.getValue(), uf.TFEmail.getValue(),
 					uf.TFFName.getValue(), uf.TFLName.getValue(),
@@ -51,6 +52,7 @@ public class UserFormController implements ClickListener, ValueChangeListener {
 					uf.TFUName.getValue(), "NULL");
 		}
 		userDAO.persist(user);
+		Notification.show("User has been added",Notification.TYPE_HUMANIZED_MESSAGE);
 		}
 		catch(InvalidValueException e){
 			uf.formValidatorsOn(true);

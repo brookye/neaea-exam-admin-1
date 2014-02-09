@@ -115,7 +115,7 @@ public class ExamineeCreateForm extends CustomComponent {
 		studentTable.addValueChangeListener(ecfc);
 		// Shows feedback from selection.
 		studImageUploader = new Upload("Upload", null);
-		studImage = new Image();
+		studImage = new Image();	
 		studImage.setVisible(false);
 		studLayout = new VerticalLayout();
 		studLayout.addComponent(studImage);
@@ -132,7 +132,7 @@ public class ExamineeCreateForm extends CustomComponent {
 		gfName = new TextField("Grandfather's name");
 		gfName.setWidth(160, Unit.POINTS);
 		schoolCode = new TextField("School Code");
-		schoolCode.setValue("01");
+		//schoolCode.setValue(MainForm.userData.get("SCHOOL_CODE"));
 		schoolCode.setEnabled(false);
 		schoolCode.setWidth(160, Unit.POINTS);
 		age = new TextField("Age");

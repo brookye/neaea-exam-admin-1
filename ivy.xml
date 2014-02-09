@@ -46,5 +46,7 @@
 	    <dependency org="org.mockito" name="mockito-core" rev="1.9.5"  />	
 	    <!-- junit -->
 	    <dependency org="junit" name="junit" rev="4.11" />	
+	    <!-- jasper report-->
+	    <dependency org="net.sf.jasperreports" name="jasperreports" rev="5.2.0"/>
 	</dependencies>
 </ivy-module>

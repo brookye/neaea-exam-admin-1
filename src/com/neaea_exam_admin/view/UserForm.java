@@ -145,18 +145,19 @@ public class UserForm extends CustomComponent {
 				.addValidator(new StringLengthValidator(
 						"Incorrect password format atleast string sould be between 8 and 15",
 						8, 15, false));
-		PFPassword
-				.addValidator(new RegexpValidator(
-						"^[a-zA-Z0-9]+",
-						false,
-						"password should consist special characters,numbers and letters.No other character is allowed."));
+		/*
+		 * PFPassword .addValidator(new RegexpValidator( "[a-zA-Z0-9]+", false,
+		 * "password should consist special characters,numbers and letters.No other character is allowed."
+		 * ));
+		 */
 		PFPassword.setWidth(160, Sizeable.Unit.POINTS);
 		PFConfirmPassword = new PasswordField("Confirm password");
-		PFConfirmPassword
-				.addValidator(new RegexpValidator(
-						"^[a-zA-Z0-9]+",
-						false,
-						"password should consist special characters,numbers and letters.No other character is allowed."));
+		/*
+		 * PFConfirmPassword .addValidator(new RegexpValidator( "[a-zA-Z0-9]+",
+		 * false,
+		 * "password should consist special characters,numbers and letters.No other character is allowed."
+		 * ));
+		 */
 		PFConfirmPassword
 				.addValidator(new StringLengthValidator(
 						"Incorrect password format atleast string should be between 8 and 15",
@@ -180,6 +181,20 @@ public class UserForm extends CustomComponent {
 
 	}
 
+	public void schoolRepFormPartsValidated(boolean isOn) {
+		CBZone.setValidationVisible(isOn);
+		CBRegion.setValidationVisible(isOn);
+		CBWoreda.setValidationVisible(isOn);
+		CBSchoolName.setValidationVisible(isOn);
+	}
+
+	public void schoolRepFormPartValidate() {
+		CBZone.validate();
+		CBRegion.validate();
+		CBWoreda.validate();
+		CBSchoolName.validate();
+	}
+
 	public void formValidatorsOn(boolean isOn) {
 		CBUserType.setValidationVisible(isOn);
 		TFFName.setValidationVisible(isOn);
@@ -189,12 +204,12 @@ public class UserForm extends CustomComponent {
 		PFConfirmPassword.setValidationVisible(isOn);
 		TFUName.setValidationVisible(isOn);
 		TFTelephone.setValidationVisible(isOn);
-		if (fl.getComponentCount() > 8) {
-			CBZone.setValidationVisible(isOn);
-			CBRegion.setValidationVisible(isOn);
-			CBWoreda.setValidationVisible(isOn);
-			CBSchoolName.setValidationVisible(isOn);
-		}
+
+		CBZone.setValidationVisible(isOn);
+		CBRegion.setValidationVisible(isOn);
+		CBWoreda.setValidationVisible(isOn);
+		CBSchoolName.setValidationVisible(isOn);
+
 	}
 
 	public void Validate() throws InvalidValueException {
@@ -206,12 +221,7 @@ public class UserForm extends CustomComponent {
 		PFConfirmPassword.validate();
 		TFUName.validate();
 		TFTelephone.validate();
-		if (fl.getComponentCount() > 8) {
-			CBZone.validate();
-			CBRegion.validate();
-			CBWoreda.validate();
-			CBSchoolName.validate();
-		}
+
 	}
 
 	public void resetFormLayout(boolean schoolMasterIsSelected) {

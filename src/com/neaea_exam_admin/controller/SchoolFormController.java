@@ -47,12 +47,11 @@ public void buttonClick(ClickEvent event) {
 			sf.formValidatorLabelsOn(true);
 			Notification.show("Invalid values", Notification.TYPE_ERROR_MESSAGE);
 		}
-<<<<<<< HEAD
+
 		catch(Exception e){
 			Notification.show(e.getMessage(), Notification.TYPE_ERROR_MESSAGE);
 		}
-=======
->>>>>>> 802585f8dc16a331acb25b38f7bf6efabef3f729
+
 	}
 	
 }

@@ -31,6 +31,12 @@ public class NavigationMenu extends CustomComponent {
 	public MenuItem finance;
 	public MenuItem report;
 	public MenuItem woredaAllowance;
+	public MenuItem user;
+	public MenuItem logout;
+	public MenuItem examCenter;
+	public MenuItem userManagement;
+	public MenuItem school;
+	public MenuItem examinee;
 
 	public NavigationMenu() {
 		init();
@@ -39,20 +45,20 @@ public class NavigationMenu extends CustomComponent {
 	private void init() {
 		HorizontalLayout vl = new HorizontalLayout();
 		menubar = new MenuBar();
-		MenuItem userManagement = menubar.addItem("User management", null);
+		userManagement = menubar.addItem("User management", null);
 		newUser = userManagement.addItem("New user", null);
-		updateUser = userManagement.addItem("New user", null);
-		MenuItem school = menubar.addItem("School", null);
+		updateUser = userManagement.addItem("Edit user", null);
+		school = menubar.addItem("School", null);
 		newSchool = school.addItem("New school", null);
 		editSchool = school.addItem("Edit school", null);
 		assingExamCenter = school.addItem("Assign exam center", null);
 		MenuItem schoolLocation = school.addItem("Location setup", null);
 		zone = schoolLocation.addItem("New zone", null);
 		woreda = schoolLocation.addItem("New worda", null);
-		MenuItem examCenter = menubar.addItem("Exam Center", null);
+		examCenter = menubar.addItem("Exam Center", null);
 		newExamCenter = examCenter.addItem("New exam center", null);
 		updateExamCenter = examCenter.addItem("Edit exam center", null);
-		MenuItem examinee = menubar.addItem("Examinee", null);
+		examinee = menubar.addItem("Examinee", null);
 		registerExaminee = examinee.addItem("New examinee", null);
 		editExaminee = examinee.addItem("Edit examinee", null);
 		assignRegNo = examinee.addItem("Assign regNo", null);
@@ -60,7 +66,8 @@ public class NavigationMenu extends CustomComponent {
 		woredaAllowance = finance.addItem("Woreda Allowance", null);
 		report = menubar.addItem("Report", null);
 		menubar.addItem("Help", null);
-		menubar.addItem("Logout", null);
+		user = menubar.addItem("User", null);
+		logout = user.addItem("Logout", null);
 		menubar.setSizeFull();
 		vl.addComponent(menubar);
 		vl.setSizeFull();

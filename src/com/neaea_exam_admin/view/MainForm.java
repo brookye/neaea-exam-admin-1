@@ -54,6 +54,8 @@ public class MainForm extends UI implements Command, CloseListener {
 	}
 
 	public void showLogin() {
+		lf.TFUname.setValue("");
+		lf.PFPassword.setValue("");
 		loginWindow = new Window();
 		loginWindow.addCloseListener(this);
 		loginWindow.setContent(lf);
@@ -76,6 +78,7 @@ public class MainForm extends UI implements Command, CloseListener {
 		nm.woredaAllowance.setCommand(this);
 		nm.newExamCenter.setCommand(this);
 		nm.updateExamCenter.setCommand(this);
+		nm.logout.setCommand(this);
 	}
 
 	public void openZoneForm() {
@@ -85,6 +88,7 @@ public class MainForm extends UI implements Command, CloseListener {
 	}
 
 	public void openExamineeCreateForm() {
+		ecrf.schoolCode.setValue(userData.get("SCHOOL_CODE"));
 		vlayout.removeAllComponents();
 		vlayout.addComponent(nm);
 		vlayout.addComponent(ecrf);
@@ -153,15 +157,42 @@ public class MainForm extends UI implements Command, CloseListener {
 		} else if (formId == nm.woredaAllowance.getId()) {
 			openWoredaAllowanceForm();
 		}
+		else if (formId == nm.logout.getId()) {
+			userData.clear();
+			nm.user.setText("User");
+			showLogin();
+		}
+		
 
 	}
+    public void setActiveLinks(){
+    	String user=userData.get("USER_TYPE");    	
+    	if(user.equals("SCHOOL_MASTER")){    		
+    		nm.examCenter.setEnabled(false);
+    		nm.finance.setEnabled(false);
+    		nm.userManagement.setEnabled(false);
+    		nm.school.setEnabled(false);
+    		nm.report.setEnabled(false);
+    	}
+    	else if(user.equals("ADMIN")){
+    		
+    	}
+        else if (user.equals("EXAM_PACKING")) {
 
+		}
+        else if (user.equals("FINANCE")) {
+
+		}   	
+    	
+    }
 	@Override
 	public void windowClose(CloseEvent e) {
 		vlayout.addComponent(nm);
 		AssignMenuItemEventHandler(nm);
 		// please welcome the hero
-		Notification.show("Welcome " + userData.get("USER") + "!",
-				userData.get("USER_TYPE")+ (userData.containsKey("SCHOOL_CODE")?userData.get("SCHOOL_CODE"):""), Notification.TYPE_HUMANIZED_MESSAGE);
+		nm.user.setText(userData.get("USER"));
+		Notification.show("Welcome " + userData.get("USER") + "! ",
+				userData.get("USER_TYPE"), Notification.TYPE_HUMANIZED_MESSAGE);
+	   setActiveLinks();
 	}
 }

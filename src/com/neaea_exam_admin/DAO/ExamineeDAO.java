@@ -83,7 +83,10 @@ public class ExamineeDAO {
 				+ examineeId;
 		return getExaminees(getQuery);
 	}
-
+    public List<Examinee> getBySchoolCode(String schoolCode){
+    	String query="SELECT * FROM examinee WHERE schoolCodeId='"+schoolCode+"'";
+    	return getExaminees(query);
+    }
 	private List<Examinee> getExaminees(String getQuery) {
 
 		List<Examinee> examinees = new ArrayList<Examinee>();

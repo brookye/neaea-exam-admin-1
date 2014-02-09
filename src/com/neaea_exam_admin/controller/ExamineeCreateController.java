@@ -91,18 +91,22 @@ public class ExamineeCreateController implements ClickListener,
 			studPhotoBytes = ImageUtil.extractBytes(ecf.studImageTmpPath);
 
 			// registration confirmation no
-			String regNo = "45454" + "21";
 
 			// get the schoolcodeBook
 
-			School school = schoolDAO.getByCode(
-					ecf.schoolCode.getValue()).get(0);
-
+			School school = schoolDAO.getByCode(ecf.schoolCode.getValue()).get(
+					0);
+			String regNo = ""
+					+ school.getWoreda().getZone().getRegionCode()
+							.getRegionCode()
+					+ school.getWoreda().getZone().getZoneCode()
+					+ school.getWoreda().getWoredaCode()
+					+ examineeDAO.getBySchoolCode(school.getCode()).size();
 			// persist examinee
 
 			Examinee examinee = new Examinee(ecf.fName.getValue(),
-					ecf.mName.getValue(), ecf.gfName.getValue(),
-					school, Integer.valueOf(ecf.age.getValue()),
+					ecf.mName.getValue(), ecf.gfName.getValue(), school,
+					Integer.valueOf(ecf.age.getValue()),
 					(String) ecf.sex.getValue(), (String) ecf.sight.getValue(),
 					(String) ecf.nationality.getValue(), categoryDAO.getById(
 							(Integer) ecf.category.getValue()).get(0),
@@ -188,19 +192,22 @@ public class ExamineeCreateController implements ClickListener,
 					}
 				}
 			}
-			//upload existing examinee phot
+			// upload existing examinee phot
 			try {
-				String studImageTmpPath=Environment.createDir("tmp")+"/"+selectedExaminee.getRegistrationConfirmationNo()+".jpg";
-				System.out.println("INFO:stud image paht-"+studImageTmpPath);
-				BufferedImage bi=ImageIO.read(new ByteArrayInputStream(selectedExaminee.getPhoto()));
-				File file=new File(studImageTmpPath);
-				ImageIO.write(bi, "jpg",file);
+				String studImageTmpPath = Environment.createDir("tmp") + "/"
+						+ selectedExaminee.getRegistrationConfirmationNo()
+						+ ".jpg";
+				System.out.println("INFO:stud image paht-" + studImageTmpPath);
+				BufferedImage bi = ImageIO.read(new ByteArrayInputStream(
+						selectedExaminee.getPhoto()));
+				File file = new File(studImageTmpPath);
+				ImageIO.write(bi, "jpg", file);
 				ecf.studImage.setSource(new FileResource(file));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.getMessage();
 			}
-			
+
 			// System.out.println("INFO:"+selectedExaminee.getName()+"'s category is "+ecf.category.getValue()+"of id"+ecf.category.getValue());
 		}
 

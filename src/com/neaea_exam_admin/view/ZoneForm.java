@@ -7,11 +7,10 @@ import com.neaea_exam_admin.controller.ZoneController;
 import com.neaea_exam_admin.entity.Region;
 import com.neaea_exam_admin.utilities.ConnManager;
 import com.vaadin.data.Validator.InvalidValueException;
-<<<<<<< HEAD
+
 import com.vaadin.data.validator.RegexpValidator;
 import com.vaadin.data.validator.StringLengthValidator;
-=======
->>>>>>> 802585f8dc16a331acb25b38f7bf6efabef3f729
+
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.CustomComponent;
@@ -29,13 +28,13 @@ public class ZoneForm extends CustomComponent {
 
 	public ZoneForm() {
 		zc = new ZoneController(this);
-		init();		
+		init();
 		fillRegion();
 		setCompositionRoot(fl);
 	}
 
 	private void init() {
-		
+
 		TFZone = new TextField("Name");
 		TFZone.addValidator(new com.vaadin.data.validator.NullValidator(
 				"Can't be empty", false));
@@ -50,8 +49,8 @@ public class ZoneForm extends CustomComponent {
 		CBRegion.setWidth(160, Unit.POINTS);
 		CBRegion.setNullSelectionAllowed(false);
 		CBRegion.setNewItemsAllowed(false);
-		TFZone.setWidth(160, Unit.POINTS);		
-		TFZoneCode.setWidth(160, Unit.POINTS);		
+		TFZone.setWidth(160, Unit.POINTS);
+		TFZoneCode.setWidth(160, Unit.POINTS);
 		fl = new FormLayout();
 		fl.addComponent(CBRegion);
 		fl.addComponent(TFZone);
@@ -60,40 +59,38 @@ public class ZoneForm extends CustomComponent {
 		setFormValidator(false);
 		TFZone.addValidator(new com.vaadin.data.validator.NullValidator(
 				"Can't be empty", false));
-		TFZone.addValidator(new RegexpValidator("[a-zA-Z]+",true,"only alphabets"));
-		TFZone.addValidator(new StringLengthValidator("name length is not right", 2, 50, false));
+		TFZone.addValidator(new RegexpValidator("[a-zA-Z]+", true,
+				"only alphabets"));
+		TFZone.addValidator(new StringLengthValidator(
+				"name length is not right", 2, 50, false));
 		TFZoneCode.addValidator(new com.vaadin.data.validator.NullValidator(
 				"Can't be empty", false));
-		TFZoneCode.addValidator(new StringLengthValidator("code length is not right", 1, 2, false));
-		TFZoneCode.addValidator(new RegexpValidator("[0-9]+",true,"only digits is allowed"));
+		TFZoneCode.addValidator(new StringLengthValidator(
+				"code length is not right", 1, 2, false));
+		TFZoneCode.addValidator(new RegexpValidator("[0-9]+", true,
+				"only digits is allowed"));
 		CBRegion.addValidator(new com.vaadin.data.validator.NullValidator(
 				"Can't be empty", false));
-		
+
 	}
-	public void validate() throws InvalidValueException{
+
+	public void validate() throws InvalidValueException {
 		TFZone.validate();
 		TFZoneCode.validate();
 		CBRegion.validate();
 	}
-	public void setFormValidator(boolean isOn){
+
+	
+
+	public void setFormValidator(boolean isOn) {
 		TFZone.setValidationVisible(isOn);
 		TFZoneCode.setValidationVisible(isOn);
 		CBRegion.setValidationVisible(isOn);
 
 	}
-	public void validate() throws InvalidValueException{
-		TFZone.validate();
-		TFZoneCode.validate();
-		CBRegion.validate();
-	}
-	public void setFormValidator(boolean isOn){
-		TFZone.setValidationVisible(isOn);
-		TFZoneCode.setValidationVisible(isOn);
-		CBRegion.setValidationVisible(isOn);
 
-	}
-	private void fillRegion(){
-		RegionDAO regionDAO=new RegionDAO(new ConnManager());
+	private void fillRegion() {
+		RegionDAO regionDAO = new RegionDAO(new ConnManager());
 		List<Region> regions = regionDAO.getAll();
 		for (Region reg : regions) {
 			CBRegion.addItem(reg.getRegionCode());

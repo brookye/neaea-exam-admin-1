@@ -16,11 +16,10 @@ import com.neaea_exam_admin.entity.Zone;
 import com.neaea_exam_admin.utilities.ConnManager;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
-<<<<<<< HEAD
+
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.validator.NullValidator;
-=======
->>>>>>> 802585f8dc16a331acb25b38f7bf6efabef3f729
+
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.CustomComponent;
