@@ -13,18 +13,15 @@ Installation
  
  * Install java servlet container like apache tomcat
  
- * Deploy the application
+ * Build the application as follows
  
-    * Inoorder to build
-      -----------------
-     
-      * install eclipse
+      1. install eclipse
       
-      * install vaadin plugin for eclipse
+      2. install vaadin plugin for eclipse
       
-      * install apahce tomcat or other servlet container which can be run from with in eclipse
+      3. install apahce tomcat or other servlet container which can be run from with in eclipse
       
-      * build the application
+      4. build the application
       
  * Deploy the war file in to the server
  
