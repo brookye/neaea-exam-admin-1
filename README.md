@@ -4,7 +4,7 @@ Project Description
 -------------------
  A project submitted in partial fulfilment of software engineering class in Addis Ababa university's Ms in CS program.
 
- Our Objective is automating national exam administration and exam assesment(NEAEA) agency's exam administration which previosly has been done through paper forms which was less economical in terms of time and money as compared to a computerized one.
+ Our Objective is automating national exam administration and exam assesment(NEAEA) agency's exam administration which previously has been done through paper forms which was less economical in terms of time and money as compared to a computerized one.
  
 Installation
 ------------
@@ -13,7 +13,7 @@ Installation
  
  * Install java servlet container like apache tomcat
  
- * Build the application
+ * Deploy the application
  
     * Inoorder to build
       -----------------
